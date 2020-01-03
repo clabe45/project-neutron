@@ -1,30 +1,7 @@
 -- TODO: Fix bug on clipping, seems to occur when the player falls the .5 pixel when crossing gaps
-Player = {
-	x = 0,
-	y = 0,
-	dx = 0,
-	dy = 0,
-	hitboxX = 25,
-	hitboxY = 50
-}
-
-Entities = {
-	entities = {
-		{}
-	},
-	entityCount = 0
-}
-
-Level = {
-	height = 800,
-	width = 600,
-	-- Level tile format: x, y, id
-	-- Some tiles will be rendered invisible, but for debug they'll be drawn
-	tiles = {
-		{}
-	},
-	tileCount = 0
-}
+require("level")
+require("entities")
+require("player")
 
 Tiles = {
 	{
@@ -70,32 +47,6 @@ function drawMenu()
 	print("Menu.")
 end
 
-function Level.clear()
-	for i=1,Level.tileCount do
-		Level.tiles[i] = nil
-	end
-	Level.tileCount = 0
-end
-
-function Level.save(levelName)
-	love.filesystem.write(levelName, "800 600")
-	for i=2,Level.tileCount do
-		love.filesystem.append(levelName, "\n" .. Level.tiles[i].x .. " " .. Level.tiles[i].y .. " " .. Level.tiles[i].id)
-	end
-end
-
-function Level.read(levelName)
-	local rawLevelData = love.filesystem.read(levelName)
-	local levelLines = split(rawLevelData, "\n")
-	local levelLineData
-	-- BEWARE LINE 1, IT IS META DATA
-	for i=2,#levelLines do
-		levelLineData = split(levelLines[i], " ")
-		Level.tiles[i - 1] = {x = tonumber(levelLineData[1]), y = tonumber(levelLineData[2]), id = tonumber(levelLineData[3])}
-		Level.tileCount = Level.tileCount + 1
-	end
-end
-
 function executeCommand()
 	if (commandModeLine:sub(1, 1) == "w") then
 		if (currentLevel == "" and commandModeLine:len() < 2) then
@@ -125,29 +76,6 @@ function executeCommand()
 		end
 	end
 end
-
-function Player.drawPlayer()
-	love.graphics.setColor(100, 100, 100)
-	love.graphics.rectangle('fill', Player.x, Player.y, Player.hitboxX, Player.hitboxY)
-	--idlePlayer = love.graphics.newImage("idle.png")
-	--love.graphics.draw(idlePlayer, Player.x, Player.y)
-end
-
-function Entities.spawnEntity(x, y, health)
-	Entities.entities[Entities.entityCount] = {x = x, y = y, hp = health}
-	Entities.entityCount = Entities.entityCount + 1
-	print(Entities.entities[Entities.entityCount].x)
-	print(Entities.entityCount)
-end
-
-function Entities.drawEntities()
-	-- Loop over all the entities, incrementing by 1
-	for i=0,Entities.entityCount-1 do
-		love.graphics.setColor(0, 0, 255)
-		love.graphics.rectangle('fill', Entities.entities[i].x, Entities.entities[i].y, Player.hitboxX, Player.hitboxY)
-	end
-end
--- Next up, detract hp when entity is hit, possibly make them blink, then despawn when hp is below 0
 
 function love.load()
 	love.keyboard.setKeyRepeat(true)
