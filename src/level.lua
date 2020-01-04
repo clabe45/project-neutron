@@ -20,7 +20,7 @@ end
 -- save: writes the current tiles to a file
 function Level.save(levelName)
 	love.filesystem.write(levelName, "800 600")
-	for i=2,Level.tileCount do
+	for i=1,Level.tileCount do
 		love.filesystem.append(levelName, "\n" .. Level.tiles[i].x .. " " .. Level.tiles[i].y .. " " .. Level.tiles[i].id)
 	end
 end
