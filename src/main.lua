@@ -43,10 +43,12 @@ function split(string, character)
 	return arr
 end
 
+-- drawMenu: Will later be used to draw a menu showing status
 function drawMenu()
 	print("Menu.")
 end
 
+-- executeCommand: Executes a command, current commands include :w (write), :o (open), :set (change height/width of level)
 function executeCommand()
 	if (commandModeLine:sub(1, 1) == "w") then
 		if (currentLevel == "" and commandModeLine:len() < 2) then
@@ -77,13 +79,15 @@ function executeCommand()
 	end
 end
 
+-- load: Sets initial love values and creates a test enemy
 function love.load()
 	love.keyboard.setKeyRepeat(true)
-	love.filesystem.setIdentity("testgame")
+	love.filesystem.setIdentity("testgame_v2")
 	Entities.spawnEntity(250, 250)
 end
 
 function love.keypressed(key, scancode, isrepeat)
+	-- Commands
 	if (commandMode) then
 		if (key == "return") then
 			executeCommand()
@@ -92,14 +96,22 @@ function love.keypressed(key, scancode, isrepeat)
 		elseif (key == "backspace") then
 			commandModeLine = commandModeLine:sub(1, -2)
 		else
+			if (key == "space") then
+				key = " "
+			-- Removing invalid characters
+			elseif (key == "lshift" or key == "rshift" or key == "capslock"
+				or key == "lalt" or key == "ralt" or key == "tab" 
+				or key == "lctrl" or key == "rctrl") then
+				key = ""
+			end
 			commandModeLine = commandModeLine .. key
 		end
+	-- Jumping
 	else
-		-- Jumping
 		if (key == "space") then
 			Player.dy = -10
 		end
-		-- ActivatEntities.e level editor
+		-- Activate level editor
 		if (key == "e") then
 			editorMode = not editorMode
 		end
@@ -124,7 +136,6 @@ function love.keypressed(key, scancode, isrepeat)
 	if (key == ";") then
 		commandMode = not commandMode
 	end
-
 end
 
 function love.update(dt)
@@ -191,7 +202,7 @@ function love.draw()
 		if (commandMode) then
 			love.graphics.setColor(0, 255, 0)
 			-- The "20" magic number will be replaced when we actually bother with font data
-			love.graphics.printf(":" .. commandModeLine, 0, love.window.getHeight() - 20, 800, "left")
+			love.graphics.printf(":" .. commandModeLine, 0, love.graphics.getHeight() - 20, 800, "left")
 		end
 
 		-- Level Editor
