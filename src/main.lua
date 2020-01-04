@@ -11,11 +11,12 @@ Tiles = {
 	{
 		name = "Door Marker",
 		category = "phase"
-	}
+	},
+	totalTiles = 2
 }
 
 Editor = {
-	currentTile = 0
+	currentTile = 1
 }
 
 commandMode = false
@@ -50,21 +51,22 @@ end
 
 -- executeCommand: Executes a command, current commands include :w (write), :o (open), :set (change height/width of level)
 function executeCommand()
+	-- :w <levelname> (writes level to file)
 	if (commandModeLine:sub(1, 1) == "w") then
 		if (currentLevel == "" and commandModeLine:len() < 2) then
-			print("Error: No level name defined")
+			print("Error: No level name defined.\n Usage: :w <filename>")
 		else
 			local args = split(commandModeLine, " ")
 			Level.save(args[2])
-			print("Written \"" .. args[2] .. "\" to file.")
 		end
+	-- :o <filename> (reads level from file)
 	elseif (commandModeLine:sub(1, 1) == "o") then
 		if (commandModeLine:len() > 2) then
 			Level.clear()
 			local args = split(commandModeLine, " ")
 			Level.read(args[2])
-			print("Loaded \"" .. args[2] .. "\" successfully.")
 		end
+	-- :set <height/width> (sets level height/width)
 	elseif (commandModeLine:sub(1, 3) == "set") then
 		local args = split(commandModeLine, " ")
 		if (args[2] == "height") then
@@ -76,6 +78,11 @@ function executeCommand()
 		else
 			print("Error: Invalid arguments.\nUsage: set <variable> <value>")
 		end
+	-- :clear (clears level)
+	elseif (commandModeLine:sub(1, 5) == "clear") then
+		Level.clear()
+	else
+		print("Error. Command not found.")
 	end
 end
 
@@ -101,29 +108,32 @@ function love.keypressed(key, scancode, isrepeat)
 			-- Removing invalid characters
 			elseif (key == "lshift" or key == "rshift" or key == "capslock"
 				or key == "lalt" or key == "ralt" or key == "tab" 
-				or key == "lctrl" or key == "rctrl") then
+				or key == "lctrl" or key == "rctrl" or key == "up"
+				or key == "down" or key == "left" or key == "right"
+				or key == "escape") then
 				key = ""
 			end
 			commandModeLine = commandModeLine .. key
 		end
-	-- Jumping
+	-- Play mode
 	else
-		if (key == "space") then
-			Player.dy = -10
-		end
 		-- Activate level editor
 		if (key == "e") then
 			editorMode = not editorMode
+		end
+		-- Jumping
+		if (key == "space") then
+			Player.dy = -10
 		end
 		-- Movement keys
 		if (key == "left" and editorMode and Editor.currentTile > 0) then
 			Editor.currentTile = Editor.currentTile - 1
 		end
 		-- No boundaries yet, since we have no clue how many tiles we'll add
-		if (key == "right" and editorMode) then
+		if (key == "right" and editorMode and Editor.currentTile < Tiles.totalTiles) then
 			Editor.currentTile = Editor.currentTile + 1
 		end
-		-- Player hitbox
+		-- Player attackbox
 		if (key == "z" and not editormode) then
 			hitboxPlayerX = Player.x + 25;
 			hitboxPlayerY = Player.y + 15;
@@ -196,7 +206,7 @@ function love.draw()
 
 		-- Draw Debug
 		love.graphics.setColor(255, 255, 255)
-		love.graphics.print("Player Coords: (" .. Player.x .. ", " .. Player.y .. ")\nPlayer dx: " .. tostring(Player.dx) .. "\nPlayer dy: " .. tostring(Player.dy) ..  "\nCurrent Tile: " .. Tiles[Editor.currentTile + 1].name)
+		love.graphics.print("Player Coords: (" .. Player.x .. ", " .. Player.y .. ")\nPlayer dx: " .. tostring(Player.dx) .. "\nPlayer dy: " .. tostring(Player.dy) ..  "\nCurrent Tile: " .. Tiles[Editor.currentTile].name)
 
 		-- Draw Commandline
 		if (commandMode) then
@@ -232,24 +242,22 @@ function love.draw()
 						break
 					end
 				end
-
 			end
 		end
 
-		-- Print tiles
+		-- Draw tiles
 		if (Level.tileCount > 0) then
 			for i=1,Level.tileCount do
 				-- Temporary setup until textures happen
-				if (Level.tiles[i].id == 0) then
+				if (Level.tiles[i].id == 1) then
 					love.graphics.setColor(255, 255, 255)
 					love.graphics.rectangle("fill", Level.tiles[i].x, Level.tiles[i].y, 25, 25)
-				elseif (Level.tiles[i].id == 1) then
+				elseif (Level.tiles[i].id == 2) then
 					love.graphics.setColor(200, 0, 0)
 					love.graphics.rectangle("fill", Level.tiles[i].x, Level.tiles[i].y, 25, 25)
 				end
 			end
 		end
 	end
-
 end
 

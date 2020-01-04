@@ -23,11 +23,18 @@ function Level.save(levelName)
 	for i=1,Level.tileCount do
 		love.filesystem.append(levelName, "\n" .. Level.tiles[i].x .. " " .. Level.tiles[i].y .. " " .. Level.tiles[i].id)
 	end
+	print("Written '" .. levelname .. "' to file.")
 end
 
 -- read: reads a file and draws tiles from it
 function Level.read(levelName)
 	local rawLevelData = love.filesystem.read(levelName)
+	-- Check if file exists
+	if (rawLevelData == nil) then
+		print("File '" .. levelName .. "' not found.")
+		return
+	end
+
 	local levelLines = split(rawLevelData, "\n")
 	local levelLineData
 	-- BEWARE LINE 1, IT IS META DATA
@@ -36,5 +43,6 @@ function Level.read(levelName)
 		Level.tiles[i - 1] = {x = tonumber(levelLineData[1]), y = tonumber(levelLineData[2]), id = tonumber(levelLineData[3])}
 		Level.tileCount = Level.tileCount + 1
 	end
+	print("Loaded '" .. levelName .. "' successfully.")
 end
 
