@@ -9,6 +9,7 @@ Level = {
 	tileCount = 0
 }
 
+-- clear: removes all tiles currently drawn
 function Level.clear()
 	for i=1,Level.tileCount do
 		Level.tiles[i] = nil
@@ -16,6 +17,7 @@ function Level.clear()
 	Level.tileCount = 0
 end
 
+-- save: writes the current tiles to a file
 function Level.save(levelName)
 	love.filesystem.write(levelName, "800 600")
 	for i=2,Level.tileCount do
@@ -23,6 +25,7 @@ function Level.save(levelName)
 	end
 end
 
+-- read: reads a file and draws tiles from it
 function Level.read(levelName)
 	local rawLevelData = love.filesystem.read(levelName)
 	local levelLines = split(rawLevelData, "\n")
@@ -34,3 +37,4 @@ function Level.read(levelName)
 		Level.tileCount = Level.tileCount + 1
 	end
 end
+

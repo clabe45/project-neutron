@@ -7,6 +7,7 @@ Player = {
 	hitboxY = 50
 }
 
+-- drawPlayer: Draws the player sprite
 function Player.drawPlayer()
 	love.graphics.setColor(100, 100, 100)
 	love.graphics.rectangle('fill', Player.x, Player.y, Player.hitboxX, Player.hitboxY)
