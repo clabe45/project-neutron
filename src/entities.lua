@@ -23,20 +23,21 @@ function Entities.drawEntities()
 end
 -- Next up, detract hp when entity is hit, possibly make them blink, then despawn when hp is below 0
 
+-- applyGravity: Applys the force of gravity (.5) to all entities
 function Entities.applyGravity()
 	for i=1,Entities.entityCount do
 		Entities.entities[i].dy = Entities.entities[i].dy + .5
 	end
 end
 
+-- updateEntities: Updates the position of all spawned entities
 function Entities.updateEntities()
 	for i=1,Entities.entityCount do
 		Entities.checkCollision(Entities.entities[i])
 	end
 end
 
--- checkCollision: Given a Player or Entity object, move the entity
--- if their movements do not conflict with tiles
+-- checkCollision: Given a Player or Entity object, move the entity if their movements do not conflict with tiles
 function Entities.checkCollision(entity)
 	local attemptedX = entity.x + entity.dx
 	local attemptedY = entity.y + entity.dy
