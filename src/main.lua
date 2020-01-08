@@ -107,7 +107,7 @@ function love.keypressed(key, scancode, isrepeat)
 				key = " "
 			-- Removing invalid characters
 			elseif (key == "lshift" or key == "rshift" or key == "capslock"
-				or key == "lalt" or key == "ralt" or key == "tab" 
+				or key == "lalt" or key == "ralt" or key == "tab"
 				or key == "lctrl" or key == "rctrl" or key == "up"
 				or key == "down" or key == "left" or key == "right"
 				or key == "escape") then
@@ -165,33 +165,7 @@ function love.update(dt)
 		Entities.checkCollision(Player)
 		Entities.applyGravity()
 		Entities.updateEntities()
-		-- Checking Collisions
-		--[[
-		local attemptedX = Player.x + Player.dx
-		local attemptedY = Player.y + Player.dy
-		local collisionX = false
-		local collisionY = false
-
-		for i=1,Level.tileCount do
-			if (Player.x < Level.tiles[i].x + 25 and Player.x + 25 > Level.tiles[i].x and attemptedY < Level.tiles[i].y + 25 and attemptedY + 50 > Level.tiles[i].y) then
-				Player.dy = 0
-				collisionY = true
-			end
-			if (attemptedX < Level.tiles[i].x + 25 and attemptedX + 25 > Level.tiles[i].x and Player.y < Level.tiles[i].y + 25 and Player.y + 50 > Level.tiles[i].y) then
-				collisionX = true
-			end
-		end
-
-		-- Applying Forces
-		if (not collisionY) then
-			Player.y = Player.y + Player.dy
-		end
-		if (not collisionX) then
-			Player.x = Player.x + Player.dx
-		end
-	]]--
 	end
-
 end
 
 function love.draw()
