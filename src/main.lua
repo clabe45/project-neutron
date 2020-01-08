@@ -122,22 +122,22 @@ function love.keypressed(key, scancode, isrepeat)
 			editorMode = not editorMode
 		end
 		-- Jumping
-		if (key == "space") then
+		if (key == "space" and not editorMode) then
 			Player.dy = -10
 		end
-		-- Movement keys
+		-- Shift currently selected tile
 		if (key == "left" and editorMode and Editor.currentTile > 0) then
 			Editor.currentTile = Editor.currentTile - 1
 		end
-		-- No boundaries yet, since we have no clue how many tiles we'll add
 		if (key == "right" and editorMode and Editor.currentTile < Tiles.totalTiles) then
 			Editor.currentTile = Editor.currentTile + 1
 		end
 		-- Player attackbox
-		if (key == "z" and not editormode) then
+		if (key == "z" and not editorMode) then
 			hitboxPlayerX = Player.x + 25;
 			hitboxPlayerY = Player.y + 15;
 		end
+		-- Pausing
 		if (key == "return") then
 			print("Pause.")
 			isPaused = not isPaused
@@ -151,8 +151,7 @@ end
 function love.update(dt)
 	-- Normal physics update
 	if (not editorMode and not isPaused) then
-
-		-- Checking Keys
+		-- Check Keys
 		if (love.keyboard.isDown("left")) then
 			Player.dx = -5
 		elseif (love.keyboard.isDown("right")) then
@@ -160,7 +159,7 @@ function love.update(dt)
 		else
 			Player.dx = 0
 		end
-
+		-- Update positions
 		Player.dy = Player.dy + .5 -- Gravity
 		Entities.checkCollision(Player)
 		Entities.applyGravity()
@@ -172,6 +171,7 @@ function love.draw()
 	if (isPaused) then
 		drawMenu()
 	else
+		Level.draw()
 		if (not editorMode) then
 			Player.drawPlayer()
 			Entities.drawEntities()
@@ -196,14 +196,15 @@ function love.draw()
 
 		-- Level Editor
 		if (editorMode) then
-			-- Hover
-			love.graphics.setColor(255, 255, 255, 127)
+			-- Draw cursor
+			love.graphics.setColor(1, 1, 1, .5)
 			love.graphics.rectangle("fill", math.floor(love.mouse.getX() / 25) * 25, math.floor(love.mouse.getY() / 25) * 25, 25, 25)
 
-			-- Press
+			-- Add Tile
 			if (love.mouse.isDown(1)) then
 				local isNewTile = true
 				for i=1,Level.tileCount do
+					-- If tile currently exists, set isNewTile to false
 					if (Level.tiles[i].x == math.floor(love.mouse.getX() / 25) * 25 and Level.tiles[i].y == math.floor(love.mouse.getY() / 25) * 25 and Level.tiles[i].id == Editor.currentTile) then
 						isNewTile = false
 					end
@@ -213,6 +214,7 @@ function love.draw()
 					Level.tiles[Level.tileCount] = {x = math.floor(love.mouse.getX() / 25) * 25, y = math.floor(love.mouse.getY() / 25) * 25, id = Editor.currentTile}
 				end
 			end
+			-- Delete Tile
 			if (love.mouse.isDown(2)) then
 				for i=1,Level.tileCount do
 					if (Level.tiles[i].x == math.floor(love.mouse.getX() / 25) * 25 and Level.tiles[i].y == math.floor(love.mouse.getY() / 25) * 25) then
@@ -220,20 +222,6 @@ function love.draw()
 						Level.tileCount = Level.tileCount - 1
 						break
 					end
-				end
-			end
-		end
-
-		-- Draw tiles
-		if (Level.tileCount > 0) then
-			for i=1,Level.tileCount do
-				-- Temporary setup until textures happen
-				if (Level.tiles[i].id == 1) then
-					love.graphics.setColor(255, 255, 255)
-					love.graphics.rectangle("fill", Level.tiles[i].x, Level.tiles[i].y, 25, 25)
-				elseif (Level.tiles[i].id == 2) then
-					love.graphics.setColor(200, 0, 0)
-					love.graphics.rectangle("fill", Level.tiles[i].x, Level.tiles[i].y, 25, 25)
 				end
 			end
 		end

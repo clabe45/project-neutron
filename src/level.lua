@@ -9,6 +9,22 @@ Level = {
 	tileCount = 0
 }
 
+-- draw: Draws all loaded tiles
+function Level.draw()
+	if (Level.tileCount > 0) then
+		for i=1,Level.tileCount do
+			-- Temporary setup until textures happen
+			if (Level.tiles[i].id == 1) then
+				love.graphics.setColor(255, 255, 255)
+				love.graphics.rectangle("fill", Level.tiles[i].x, Level.tiles[i].y, 25, 25)
+			elseif (Level.tiles[i].id == 2) then
+				love.graphics.setColor(200, 0, 0)
+				love.graphics.rectangle("fill", Level.tiles[i].x, Level.tiles[i].y, 25, 25)
+			end
+		end
+	end
+end
+
 -- clear: removes all tiles currently drawn
 function Level.clear()
 	for i=1,Level.tileCount do
