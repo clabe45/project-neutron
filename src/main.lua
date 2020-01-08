@@ -90,7 +90,7 @@ end
 function love.load()
 	love.keyboard.setKeyRepeat(true)
 	love.filesystem.setIdentity("testgame_v2")
-	Entities.spawnEntity(250, 250)
+	Entities.spawnEntity(250, 250, 25)
 end
 
 function love.keypressed(key, scancode, isrepeat)
@@ -161,8 +161,12 @@ function love.update(dt)
 			Player.dx = 0
 		end
 
+		Player.dy = Player.dy + .5 -- Gravity
+		Entities.checkCollision(Player)
+		Entities.applyGravity()
+		Entities.updateEntities()
 		-- Checking Collisions
-		Player.dy = Player.dy + .5
+		--[[
 		local attemptedX = Player.x + Player.dx
 		local attemptedY = Player.y + Player.dy
 		local collisionX = false
@@ -185,6 +189,7 @@ function love.update(dt)
 		if (not collisionX) then
 			Player.x = Player.x + Player.dx
 		end
+	]]--
 	end
 
 end
