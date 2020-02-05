@@ -90,7 +90,7 @@ end
 function love.load()
 	love.keyboard.setKeyRepeat(true)
 	love.filesystem.setIdentity("testgame_v2")
-	Entities.spawnEntity(250, 250, 25)
+	Entities.spawnEntity(250, 250, 25, 1)
 end
 
 function love.keypressed(key, scancode, isrepeat)

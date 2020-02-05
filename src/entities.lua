@@ -1,4 +1,5 @@
 require("level")
+require("entities/zombie")
 
 Entities = {
 	entities = {
@@ -7,8 +8,11 @@ Entities = {
 }
 
 -- spawnEntity: creates an entity at (x, y) and loads it into the Entities object
-function Entities.spawnEntity(x, y, health)
-	Entities.entities[Entities.entityCount + 1] = {x = x, y = y, dx = 0, dy = 0, hp = health}
+-- TODO: Take out health parameter and have object provide it
+function Entities.spawnEntity(x, y, health, id)
+	if (id == 1) then
+		Entities.entities[Entities.entityCount + 1] = {id = id, x = x, y = y, dx = 0, dy = 0, Zombie.width, Zombie.height, hp = health}
+	end
 	Entities.entityCount = Entities.entityCount + 1
 end
 
@@ -16,6 +20,7 @@ end
 function Entities.drawEntities()
 	-- Loop over all the entities, incrementing by 1
 	for i=1,Entities.entityCount do
+		-- Set the color and draw a rectangle based on entity
 		love.graphics.setColor(255, 0, 0)
 		love.graphics.rectangle('fill', Entities.entities[i].x, 
 		Entities.entities[i].y, Player.hitboxX, Player.hitboxY)
@@ -33,6 +38,9 @@ end
 -- updateEntities: Updates the position of all spawned entities
 function Entities.updateEntities()
 	for i=1,Entities.entityCount do
+		if (Entities.entities[i].id == 1) then
+			Zombie.doBehaivor(Entities.entities[i])
+		end
 		Entities.checkCollision(Entities.entities[i])
 	end
 end
