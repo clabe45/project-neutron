@@ -123,7 +123,7 @@ function love.keypressed(key, scancode, isrepeat)
 		end
 		-- Jumping
 		if (key == "space" and not editorMode) then
-			Player.dy = -10
+			Entities.jump(Player)
 		end
 		-- Shift currently selected tile
 		if (key == "left" and editorMode and Editor.currentTile > 0) then

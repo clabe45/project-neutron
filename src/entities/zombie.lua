@@ -5,7 +5,7 @@ Zombie = {
 
 -- idle: When the zombie is standing still, do this
 function Zombie.idle(this)
-	this.dy = this.dy + 100
+	Entities.jump(this)
 end
 
 -- doBehaivor: Do different behaivors based on the state

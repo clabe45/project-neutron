@@ -11,7 +11,7 @@ Entities = {
 -- TODO: Take out health parameter and have object provide it
 function Entities.spawnEntity(x, y, health, id)
 	if (id == 1) then
-		Entities.entities[Entities.entityCount + 1] = {id = id, x = x, y = y, dx = 0, dy = 0, Zombie.width, Zombie.height, hp = health}
+		Entities.entities[Entities.entityCount + 1] = {id = id, x = x, y = y, dx = 0, dy = 0, Zombie.width, Zombie.height, hp = health, isFalling = false}
 	end
 	Entities.entityCount = Entities.entityCount + 1
 end
@@ -28,6 +28,16 @@ function Entities.drawEntities()
 end
 -- Next up, detract hp when entity is hit, possibly make them blink, then despawn when hp is below 0
 
+-- jump: Allows an entity to jump
+function Entities.jump(entity)
+	-- Later add a flag for if they're already on a moving platform
+	-- Since the logic here is to disable jumping when dy != 0
+	if (not entity.isFalling) then
+		entity.dy = -10
+		entity.isFalling = true
+	end
+end
+
 -- applyGravity: Applys the force of gravity (.5) to all entities
 function Entities.applyGravity()
 	for i=1,Entities.entityCount do
@@ -38,10 +48,10 @@ end
 -- updateEntities: Updates the position of all spawned entities
 function Entities.updateEntities()
 	for i=1,Entities.entityCount do
+		Entities.checkCollision(Entities.entities[i])
 		if (Entities.entities[i].id == 1) then
 			Zombie.doBehaivor(Entities.entities[i])
 		end
-		Entities.checkCollision(Entities.entities[i])
 	end
 end
 
@@ -55,6 +65,7 @@ function Entities.checkCollision(entity)
 	for i=1,Level.tileCount do
 		if (entity.x < Level.tiles[i].x + 25 and entity.x + 25 > Level.tiles[i].x and attemptedY < Level.tiles[i].y + 25 and attemptedY + 50 > Level.tiles[i].y) then
 			entity.dy = 0
+			entity.isFalling = false
 			collisionY = true
 		end
 		if (attemptedX < Level.tiles[i].x + 25 and attemptedX + 25 > Level.tiles[i].x and entity.y < Level.tiles[i].y + 25 and entity.y + 50 > Level.tiles[i].y) then
