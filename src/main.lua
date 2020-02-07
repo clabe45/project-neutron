@@ -2,6 +2,7 @@
 require("level")
 require("entities")
 require("player")
+require("editor")
 
 Tiles = {
 	{
@@ -15,13 +16,6 @@ Tiles = {
 	totalTiles = 2
 }
 
-Editor = {
-	currentTile = 1
-}
-
-commandMode = false
-commandModeLine = ""
-editorMode = true
 isPaused = false
 -- variable so the editor can do :w and know where to save to
 currentLevel = ""
@@ -49,43 +43,6 @@ function drawMenu()
 	print("Menu.")
 end
 
--- executeCommand: Executes a command, current commands include :w (write), :o (open), :set (change height/width of level)
-function executeCommand()
-	-- :w <levelname> (writes level to file)
-	if (commandModeLine:sub(1, 1) == "w") then
-		if (currentLevel == "" and commandModeLine:len() < 2) then
-			print("Error: No level name defined.\n Usage: :w <filename>")
-		else
-			local args = split(commandModeLine, " ")
-			Level.save(args[2])
-		end
-	-- :o <filename> (reads level from file)
-	elseif (commandModeLine:sub(1, 1) == "o") then
-		if (commandModeLine:len() > 2) then
-			Level.clear()
-			local args = split(commandModeLine, " ")
-			Level.read(args[2])
-		end
-	-- :set <height/width> (sets level height/width)
-	elseif (commandModeLine:sub(1, 3) == "set") then
-		local args = split(commandModeLine, " ")
-		if (args[2] == "height") then
-			Level.height = args[3]
-			print("Level height set to " .. args[3])
-		elseif (args[2] == "width") then
-			Level.width = args[3]
-			print("Level width set to " .. args[3])
-		else
-			print("Error: Invalid arguments.\nUsage: set <variable> <value>")
-		end
-	-- :clear (clears level)
-	elseif (commandModeLine:sub(1, 5) == "clear") then
-		Level.clear()
-	else
-		print("Error. Command not found.")
-	end
-end
-
 -- load: Sets initial love values and creates a test enemy
 function love.load()
 	love.keyboard.setKeyRepeat(true)
@@ -95,13 +52,13 @@ end
 
 function love.keypressed(key, scancode, isrepeat)
 	-- Commands
-	if (commandMode) then
+	if (Editor.commandMode) then
 		if (key == "return") then
-			executeCommand()
-			commandModeLine = ""
-			commandMode = false
+			Editor.executeCommand()
+			Editor.commandModeLine = ""
+			Editor.commandMode = false
 		elseif (key == "backspace") then
-			commandModeLine = commandModeLine:sub(1, -2)
+			Editor.commandModeLine = Editor.commandModeLine:sub(1, -2)
 		else
 			if (key == "space") then
 				key = " "
@@ -113,7 +70,7 @@ function love.keypressed(key, scancode, isrepeat)
 				or key == "escape") then
 				key = ""
 			end
-			commandModeLine = commandModeLine .. key
+			Editor.commandModeLine = Editor.commandModeLine .. key
 		end
 	-- Play mode
 	else
@@ -144,7 +101,7 @@ function love.keypressed(key, scancode, isrepeat)
 		end
 	end
 	if (key == ";") then
-		commandMode = not commandMode
+		Editor.commandMode = not Editor.commandMode
 	end
 end
 
@@ -188,10 +145,10 @@ function love.draw()
 		love.graphics.print("Player Coords: (" .. Player.x .. ", " .. Player.y .. ")\nPlayer dx: " .. tostring(Player.dx) .. "\nPlayer dy: " .. tostring(Player.dy) ..  "\nCurrent Tile: " .. Tiles[Editor.currentTile].name)
 
 		-- Draw Commandline
-		if (commandMode) then
+		if (Editor.commandMode) then
 			love.graphics.setColor(0, 255, 0)
 			-- The "20" magic number will be replaced when we actually bother with font data
-			love.graphics.printf(":" .. commandModeLine, 0, love.graphics.getHeight() - 20, 800, "left")
+			love.graphics.printf(":" .. Editor.commandModeLine, 0, love.graphics.getHeight() - 20, 800, "left")
 		end
 
 		-- Level Editor

@@ -39,7 +39,7 @@ function Level.save(levelName)
 	for i=1,Level.tileCount do
 		love.filesystem.append(levelName, "\n" .. Level.tiles[i].x .. " " .. Level.tiles[i].y .. " " .. Level.tiles[i].id)
 	end
-	print("Written '" .. levelname .. "' to file.")
+	print("Written '" .. levelName .. "' to file.")
 end
 
 -- read: reads a file and draws tiles from it
