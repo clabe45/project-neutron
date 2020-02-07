@@ -45,6 +45,7 @@ end
 
 -- load: Sets initial love values and creates a test enemy
 function love.load()
+	love.window.setTitle("Project Neutron")
 	love.keyboard.setKeyRepeat(true)
 	love.filesystem.setIdentity("testgame_v2")
 	Entities.spawnEntity(250, 250, 25, 1)
@@ -52,42 +53,16 @@ end
 
 function love.keypressed(key, scancode, isrepeat)
 	-- Commands
-	if (Editor.commandMode) then
-		if (key == "return") then
-			Editor.executeCommand()
-			Editor.commandModeLine = ""
-			Editor.commandMode = false
-		elseif (key == "backspace") then
-			Editor.commandModeLine = Editor.commandModeLine:sub(1, -2)
-		else
-			if (key == "space") then
-				key = " "
-			-- Removing invalid characters
-			elseif (key == "lshift" or key == "rshift" or key == "capslock"
-				or key == "lalt" or key == "ralt" or key == "tab"
-				or key == "lctrl" or key == "rctrl" or key == "up"
-				or key == "down" or key == "left" or key == "right"
-				or key == "escape") then
-				key = ""
-			end
-			Editor.commandModeLine = Editor.commandModeLine .. key
-		end
-	-- Play mode
+	if (Editor.commandMode or editorMode) then
+		Editor.handleInput(key)
 	else
 		-- Activate level editor
 		if (key == "e") then
-			editorMode = not editorMode
+			editorMode = true
 		end
 		-- Jumping
 		if (key == "space" and not editorMode) then
 			Entities.jump(Player)
-		end
-		-- Shift currently selected tile
-		if (key == "left" and editorMode and Editor.currentTile > 0) then
-			Editor.currentTile = Editor.currentTile - 1
-		end
-		if (key == "right" and editorMode and Editor.currentTile < Tiles.totalTiles) then
-			Editor.currentTile = Editor.currentTile + 1
 		end
 		-- Player attackbox
 		if (key == "z" and not editorMode) then
@@ -144,19 +119,9 @@ function love.draw()
 		love.graphics.setColor(255, 255, 255)
 		love.graphics.print("Player Coords: (" .. Player.x .. ", " .. Player.y .. ")\nPlayer dx: " .. tostring(Player.dx) .. "\nPlayer dy: " .. tostring(Player.dy) ..  "\nCurrent Tile: " .. Tiles[Editor.currentTile].name)
 
-		-- Draw Commandline
-		if (Editor.commandMode) then
-			love.graphics.setColor(0, 255, 0)
-			-- The "20" magic number will be replaced when we actually bother with font data
-			love.graphics.printf(":" .. Editor.commandModeLine, 0, love.graphics.getHeight() - 20, 800, "left")
-		end
-
+		Editor.drawEditor()
 		-- Level Editor
 		if (editorMode) then
-			-- Draw cursor
-			love.graphics.setColor(1, 1, 1, .5)
-			love.graphics.rectangle("fill", math.floor(love.mouse.getX() / 25) * 25, math.floor(love.mouse.getY() / 25) * 25, 25, 25)
-
 			-- Add Tile
 			if (love.mouse.isDown(1)) then
 				local isNewTile = true
