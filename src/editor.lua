@@ -53,15 +53,6 @@ function Editor.handleInput(key)
 				Level.addTile(x, y, Editor.currentTile)
 			end
 		end
-		if (key == "m2") then
-			local x = math.floor(love.mouse.getX() / 25) * 25
-			local y = math.floor(love.mouse.getY() / 25) * 25
-			for i=1,Level.tileCount do
-				if (Level.tiles[i].x == x and Level.tiles[i].y == y) then
-					Level.removeTile(x, y)
-				end
-			end
-		end
 	end
 end
 

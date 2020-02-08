@@ -31,12 +31,6 @@ function Level.addTile(x, y, id)
 	Level.tiles[Level.tileCount] = {x = x, y = y, id = id}
 end
 
--- removeTile: Removes a tile from the level
-function Level.removeTile(x, y)
-	table.remove(Level.tiles, i)
-	Level.tileCount = Level.tileCount - 1
-end
-
 -- clear: removes all tiles currently drawn
 function Level.clear()
 	for i=1,Level.tileCount do

@@ -128,7 +128,13 @@ function love.draw()
 			end
 			-- Delete Tile
 			if (love.mouse.isDown(2)) then
-				Editor.handleInput("m2")
+				for i=1,Level.tileCount do
+					if (Level.tiles[i].x == math.floor(love.mouse.getX() / 25) * 25 and Level.tiles[i].y == math.floor(love.mouse.getY() / 25) * 25) then
+						table.remove(Level.tiles, i)
+						Level.tileCount = Level.tileCount - 1
+						break
+					end
+				end
 			end
 		end
 	end
