@@ -124,17 +124,7 @@ function love.draw()
 		if (editorMode) then
 			-- Add Tile
 			if (love.mouse.isDown(1)) then
-				local isNewTile = true
-				for i=1,Level.tileCount do
-					-- If tile currently exists, set isNewTile to false
-					if (Level.tiles[i].x == math.floor(love.mouse.getX() / 25) * 25 and Level.tiles[i].y == math.floor(love.mouse.getY() / 25) * 25 and Level.tiles[i].id == Editor.currentTile) then
-						isNewTile = false
-					end
-				end
-				if (isNewTile) then
-					Level.tileCount = Level.tileCount + 1
-					Level.tiles[Level.tileCount] = {x = math.floor(love.mouse.getX() / 25) * 25, y = math.floor(love.mouse.getY() / 25) * 25, id = Editor.currentTile}
-				end
+				Editor.handleInput("m1")
 			end
 			-- Delete Tile
 			if (love.mouse.isDown(2)) then

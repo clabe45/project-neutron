@@ -25,6 +25,12 @@ function Level.draw()
 	end
 end
 
+-- addTile: Adds a new tile to the level
+function Level.addTile(x, y, id)
+	Level.tileCount = Level.tileCount + 1
+	Level.tiles[Level.tileCount] = {x = x, y = y, id = id}
+end
+
 -- clear: removes all tiles currently drawn
 function Level.clear()
 	for i=1,Level.tileCount do

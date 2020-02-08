@@ -38,6 +38,20 @@ function Editor.handleInput(key)
 		end
 		if (key == "right" and editorMode and Editor.currentTile < Tiles.totalTiles) then
 			Editor.currentTile = Editor.currentTile + 1
+		end 
+		if (key == "m1") then
+			local x = math.floor(love.mouse.getX() / 25) * 25
+			local y = math.floor(love.mouse.getY() / 25) * 25
+			local isNewTile = true
+			for i=1,Level.tileCount do
+				-- If tile currently exists, set isNewTile to false
+				if (Level.tiles[i].x == x and Level.tiles[i].y == y and Level.tiles[i].id == Editor.currentTile) then
+					isNewTile = false
+				end
+			end
+			if (isNewTile) then
+				Level.addTile(x, y, Editor.currentTile)
+			end
 		end
 	end
 end
