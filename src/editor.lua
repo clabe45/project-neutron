@@ -56,22 +56,31 @@ function Editor.handleInput(key)
 			end
 		end
 		if (key == "up") then
-			if (Editor.mode == "tile") then
-				Editor.mode = "entity"
+			if (Editor.mode == "entity") then
+				Editor.mode = "tile"
 			end
 		end
 		if (key == "m1") then
-			local x = math.floor(love.mouse.getX() / 25) * 25
-			local y = math.floor(love.mouse.getY() / 25) * 25
-			local isNewTile = true
-			for i=1,Level.tileCount do
-				-- If tile currently exists, set isNewTile to false
-				if (Level.tiles[i].x == x and Level.tiles[i].y == y and Level.tiles[i].id == Editor.currentTile) then
-					isNewTile = false
+			if (Editor.mode == "tile") then
+				local x = math.floor(love.mouse.getX() / 25) * 25
+				local y = math.floor(love.mouse.getY() / 25) * 25
+				local isNewTile = true
+				for i=1,Level.tileCount do
+					-- If tile currently exists, set isNewTile to false
+					if (Level.tiles[i].x == x and Level.tiles[i].y == y and Level.tiles[i].id == Editor.currentTile) then
+						isNewTile = false
+					end
+				end
+				if (isNewTile) then
+					Level.addTile(x, y, Editor.currentTile)
 				end
 			end
-			if (isNewTile) then
-				Level.addTile(x, y, Editor.currentTile)
+			if (Editor.mode == "entity") then
+				local x = math.floor(love.mouse.getX() / 25) * 25
+				local y = math.floor(love.mouse.getY() / 25) * 25
+				-- Replace magic number
+				-- Add something to check for mouseup?
+				Entities.spawnEntity(x, y, 50, Editor.currentEntity)
 			end
 		end
 	end
