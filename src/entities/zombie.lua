@@ -1,6 +1,7 @@
 Zombie = {
 	width = 50,
-	height = 100
+	height = 100,
+	name = "Zombie"
 }
 
 -- idle: When the zombie is standing still, do this

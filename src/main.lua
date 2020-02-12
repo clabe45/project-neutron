@@ -117,7 +117,7 @@ function love.draw()
 
 		-- Draw Debug
 		love.graphics.setColor(255, 255, 255)
-		love.graphics.print("Player Coords: (" .. Player.x .. ", " .. Player.y .. ")\nPlayer dx: " .. tostring(Player.dx) .. "\nPlayer dy: " .. tostring(Player.dy) ..  "\nCurrent Tile: " .. Tiles[Editor.currentTile].name)
+		love.graphics.print("Player Coords: (" .. Player.x .. ", " .. Player.y .. ")\nPlayer dx: " .. tostring(Player.dx) .. "\nPlayer dy: " .. tostring(Player.dy) ..  "\nCurrent Tile: " .. Tiles[Editor.currentTile].name .. "\nCurrent Entity: " .. Entities.list[Editor.currentEntity].name)
 
 		Editor.drawEditor()
 		-- Level Editor

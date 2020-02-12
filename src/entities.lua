@@ -4,7 +4,10 @@ require("entities/zombie")
 Entities = {
 	entities = {
 	},
-	entityCount = 0
+	entityCount = 0,
+	list = {
+		Zombie
+	}
 }
 
 -- spawnEntity: creates an entity at (x, y) and loads it into the Entities object

@@ -1,9 +1,11 @@
 Editor = {
-	currentTile = 1
+	currentTile = 1,
+	currentEntity = 1
 }
 
 Editor.commandMode = false
 Editor.commandModeLine = ""
+Editor.mode = "tile" -- Can be tile, entity, or item
 editorMode = true
 
 -- handleInput: Handles commandLine and level editor keys
@@ -33,12 +35,31 @@ function Editor.handleInput(key)
 		if (key == "e") then editorMode = false end
 
 		-- Shift currently selected tile
+		-- Move the bounds checkers into the if ladder
 		if (key == "left" and editorMode and Editor.currentTile > 0) then
-			Editor.currentTile = Editor.currentTile - 1
+			if (Editor.mode == "tile") then
+				Editor.currentTile = Editor.currentTile - 1
+			elseif (Editor.mode == "entity") then
+				Editor.currentEntity = Editor.currentEntity - 1
+			end
 		end
 		if (key == "right" and editorMode and Editor.currentTile < Tiles.totalTiles) then
-			Editor.currentTile = Editor.currentTile + 1
+			if (Editor.mode == "tile") then
+				Editor.currentTile = Editor.currentTile + 1
+			elseif (Editor.mode == "entity") then
+				Editor.currentEntity = Editor.currentEntity + 1
+			end
 		end 
+		if (key == "down") then
+			if (Editor.mode == "tile") then
+				Editor.mode = "entity"
+			end
+		end
+		if (key == "up") then
+			if (Editor.mode == "tile") then
+				Editor.mode = "entity"
+			end
+		end
 		if (key == "m1") then
 			local x = math.floor(love.mouse.getX() / 25) * 25
 			local y = math.floor(love.mouse.getY() / 25) * 25
