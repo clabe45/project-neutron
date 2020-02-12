@@ -3,6 +3,7 @@ require("level")
 require("entities")
 require("player")
 require("editor")
+require("camera")
 
 Tiles = {
 	{
@@ -86,8 +87,10 @@ function love.update(dt)
 		-- Check Keys
 		if (love.keyboard.isDown("left")) then
 			Player.dx = -5
+			Camera.shift(Player.dx)
 		elseif (love.keyboard.isDown("right")) then
 			Player.dx = 5
+			Camera.shift(Player.dx)
 		else
 			Player.dx = 0
 		end
