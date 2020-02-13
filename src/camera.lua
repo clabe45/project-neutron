@@ -1,3 +1,4 @@
+require("player")
 -- On keypress, shift all tiles to the direction at the player's speed
 -- Keep player in center unless approaching room bounds
 Camera = {
@@ -7,6 +8,7 @@ Camera = {
 
 -- Add x and y directions
 function Camera.shift(direction)
+	Camera.x = Player.x - windowWidth / 2
 	-- Checking the bounds of the level
 	if (Camera.x < 0) then
 		Camera.x = 0
@@ -19,9 +21,7 @@ function Camera.shift(direction)
 	end
 
 	-- Moving the camera
-	print("Shifting camera: " .. direction)
-	Camera.x = Camera.x + direction
-	Camera.x = Player.x - windowWidth / 2
+	--Camera.x = Camera.x + direction
 end
 
 function Camera.convert(axis, value)
