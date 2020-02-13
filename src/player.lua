@@ -9,7 +9,7 @@ Player = {
 
 -- drawPlayer: Draws the player sprite
 function Player.drawPlayer()
-	love.graphics.setColor(100, 100, 100)
+	love.graphics.setColor(0, 1, 0)
 	love.graphics.rectangle('fill', Camera.convert("x", Player.x), Camera.convert("y",Player.y), Player.hitboxX, Player.hitboxY)
 	--idlePlayer = love.graphics.newImage("idle.png")
 	--love.graphics.draw(idlePlayer, Player.x, Player.y)

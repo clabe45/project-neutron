@@ -62,8 +62,8 @@ function Editor.handleInput(key)
 		end
 		if (key == "m1") then
 			if (Editor.mode == "tile") then
-				local x = math.floor(love.mouse.getX() / 25) * 25
-				local y = math.floor(love.mouse.getY() / 25) * 25
+				local x = math.floor((love.mouse.getX() + Camera.x) / 25) * 25
+				local y = math.floor((love.mouse.getY() + Camera.y) / 25) * 25
 				local isNewTile = true
 				for i=1,Level.tileCount do
 					-- If tile currently exists, set isNewTile to false
