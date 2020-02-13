@@ -21,7 +21,7 @@ function Level.draw()
 			tileY = Camera.convert("y", Level.tiles[i].y)
 			-- Temporary setup until textures happen
 			if (Level.tiles[i].id == 1) then
-				love.graphics.setColor(255, 255, 255)
+				love.graphics.setColor(1, 1, 1)
 				love.graphics.rectangle("fill", tileX, tileY, 25, 25)
 			elseif (Level.tiles[i].id == 2) then
 				love.graphics.setColor(200, 0, 0)

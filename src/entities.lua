@@ -26,7 +26,7 @@ function Entities.drawEntities()
 		entityX = Camera.convert("x", Entities.entities[i].x)
 		entityY = Camera.convert("y", Entities.entities[i].y)
 		-- Set the color and draw a rectangle based on entity
-		love.graphics.setColor(255, 0, 0)
+		love.graphics.setColor(1, 0, 0)
 		love.graphics.rectangle('fill', entityX, entityY, Player.hitboxX, Player.hitboxY)
 	end
 end
