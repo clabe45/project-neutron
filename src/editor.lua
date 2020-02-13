@@ -123,6 +123,7 @@ function Editor.executeCommand()
 	end
 end
 
+-- drawEditor: Draws the commandline and editor cursor
 function Editor.drawEditor()
 	-- Draw Commandline
 	if (Editor.commandMode) then

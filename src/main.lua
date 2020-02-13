@@ -124,9 +124,19 @@ function love.draw()
 			end
 		end
 
+		-- Building the debug dialog
+		local debugLine = "Player Coords: (" .. Player.x .. ", " .. Player.y .. ")\n"
+		debugLine = debugLine .. "Player dx: " .. Player.dx .. "\n"
+		debugLine = debugLine .. "Player dy: " .. Player.dy .. "\n"
+		if (Editor.mode == "tile") then
+			debugLine = debugLine .. "Current Tile: " .. Tiles[Editor.currentTile].name .. "\n"
+		elseif (Editor.mode == "entity") then
+			debugLine = debugLine .. "Current Entity: " .. Entities.list[Editor.currentEntity].name .. "\n"
+		end
+
 		-- Draw Debug
 		love.graphics.setColor(1, 1, 1)
-		love.graphics.print("Player Coords: (" .. Player.x .. ", " .. Player.y .. ")\nPlayer dx: " .. tostring(Player.dx) .. "\nPlayer dy: " .. tostring(Player.dy) ..  "\nCurrent Tile: " .. Tiles[Editor.currentTile].name .. "\nCurrent Entity: " .. Entities.list[Editor.currentEntity].name)
+		love.graphics.print(debugLine)
 
 		Editor.drawEditor()
 		-- Level Editor
