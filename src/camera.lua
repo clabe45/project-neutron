@@ -9,14 +9,18 @@ Camera = {
 -- Add x and y directions
 function Camera.shift(direction)
 	Camera.x = Player.x - windowWidth / 2
+	Camera.y = Player.y - windowHeight / 2
 	-- Checking the bounds of the level
 	if (Camera.x < 0) then
 		Camera.x = 0
-	elseif (Camera.y < 0) then
+	end
+	if (Camera.y < 0) then
 		Camera.y = 0
-	elseif (Camera.x > (Level.width - windowWidth)) then
+	end
+	if (Camera.x > (Level.width - windowWidth)) then
 		Camera.x = Level.width - windowWidth
-	elseif (Camera.y > (Level.height - windowHeight)) then
+	end
+	if (Camera.y > (Level.height - windowHeight)) then
 		Camera.y = Level.height - windowHeight
 	end
 

@@ -89,10 +89,10 @@ function love.update(dt)
 		-- Check Keys
 		if (love.keyboard.isDown("left")) then
 			Player.dx = -5
-			Camera.shift(Player.dx)
+			--Camera.shift(Player.dx)
 		elseif (love.keyboard.isDown("right")) then
 			Player.dx = 5
-			Camera.shift(Player.dx)
+			--Camera.shift(Player.dx)
 		else
 			Player.dx = 0
 		end
@@ -101,6 +101,7 @@ function love.update(dt)
 		Entities.checkCollision(Player)
 		Entities.applyGravity()
 		Entities.updateEntities()
+		Camera.shift(21)
 	end
 end
 
