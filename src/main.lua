@@ -118,14 +118,14 @@ function love.draw()
 			Entities.drawEntities()
 			-- Draw the hitbox
 			if (hitboxPlayerX and hitboxPlayerY) then
-				love.graphics.setColor(255, 0, 0)
+				love.graphics.setColor(1, 0, 0)
 				-- Depending on weapon equipped, the hitbox will be bigger/smaller
 				love.graphics.rectangle("fill", hitboxPlayerX, hitboxPlayerY, 20, 30)
 			end
 		end
 
 		-- Draw Debug
-		love.graphics.setColor(255, 255, 255)
+		love.graphics.setColor(1, 1, 1)
 		love.graphics.print("Player Coords: (" .. Player.x .. ", " .. Player.y .. ")\nPlayer dx: " .. tostring(Player.dx) .. "\nPlayer dy: " .. tostring(Player.dy) ..  "\nCurrent Tile: " .. Tiles[Editor.currentTile].name .. "\nCurrent Entity: " .. Entities.list[Editor.currentEntity].name)
 
 		Editor.drawEditor()
