@@ -46,6 +46,8 @@ end
 
 -- load: Sets initial love values and creates a test enemy
 function love.load()
+	windowWidth = love.graphics.getWidth()
+	windowHeight = love.graphics.getHeight()
 	love.window.setTitle("Project Neutron")
 	love.keyboard.setKeyRepeat(true)
 	love.filesystem.setIdentity("testgame_v2")

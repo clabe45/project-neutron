@@ -1,6 +1,10 @@
+require("camera")
+
 Level = {
-	height = 800,
-	width = 600,
+	--height = 800,
+	--width = 600,
+	height = 1000,
+	width = 1000,
 	-- Level tile format: x, y, id
 	-- Some tiles will be rendered invisible, but for debug they'll be drawn
 	tiles = {
@@ -13,13 +17,15 @@ Level = {
 function Level.draw()
 	if (Level.tileCount > 0) then
 		for i=1,Level.tileCount do
+			tileX = Level.tiles[i].x - Camera.x
+			tileY = Level.tiles[i].y - Camera.y
 			-- Temporary setup until textures happen
 			if (Level.tiles[i].id == 1) then
 				love.graphics.setColor(255, 255, 255)
-				love.graphics.rectangle("fill", Level.tiles[i].x, Level.tiles[i].y, 25, 25)
+				love.graphics.rectangle("fill", tileX, tileY, 25, 25)
 			elseif (Level.tiles[i].id == 2) then
 				love.graphics.setColor(200, 0, 0)
-				love.graphics.rectangle("fill", Level.tiles[i].x, Level.tiles[i].y, 25, 25)
+				love.graphics.rectangle("fill", tileX, tileY, 25, 25)
 			end
 		end
 	end

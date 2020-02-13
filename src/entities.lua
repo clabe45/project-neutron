@@ -23,10 +23,11 @@ end
 function Entities.drawEntities()
 	-- Loop over all the entities, incrementing by 1
 	for i=1,Entities.entityCount do
+		entityX = Entities.entities[i].x - Camera.x
+		entityY = Entities.entities[i].y - Camera.y
 		-- Set the color and draw a rectangle based on entity
 		love.graphics.setColor(255, 0, 0)
-		love.graphics.rectangle('fill', Entities.entities[i].x, 
-		Entities.entities[i].y, Player.hitboxX, Player.hitboxY)
+		love.graphics.rectangle('fill', entityX, entityY, Player.hitboxX, Player.hitboxY)
 	end
 end
 -- Next up, detract hp when entity is hit, possibly make them blink, then despawn when hp is below 0
