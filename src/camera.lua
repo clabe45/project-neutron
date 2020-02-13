@@ -21,5 +21,16 @@ function Camera.shift(direction)
 	-- Moving the camera
 	print("Shifting camera: " .. direction)
 	Camera.x = Camera.x + direction
+	Camera.x = Player.x - windowWidth / 2
+end
+
+function Camera.convert(axis, value)
+	if (axis == "x") then
+		return value - Camera.x
+	elseif (axis == "y") then
+		return value - Camera.y
+	else
+		print("Invalid conversion")
+	end
 end
 

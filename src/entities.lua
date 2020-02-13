@@ -23,8 +23,8 @@ end
 function Entities.drawEntities()
 	-- Loop over all the entities, incrementing by 1
 	for i=1,Entities.entityCount do
-		entityX = Entities.entities[i].x - Camera.x
-		entityY = Entities.entities[i].y - Camera.y
+		entityX = Camera.convert("x", Entities.entities[i].x)
+		entityY = Camera.convert("y", Entities.entities[i].y)
 		-- Set the color and draw a rectangle based on entity
 		love.graphics.setColor(255, 0, 0)
 		love.graphics.rectangle('fill', entityX, entityY, Player.hitboxX, Player.hitboxY)

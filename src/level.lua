@@ -17,8 +17,8 @@ Level = {
 function Level.draw()
 	if (Level.tileCount > 0) then
 		for i=1,Level.tileCount do
-			tileX = Level.tiles[i].x - Camera.x
-			tileY = Level.tiles[i].y - Camera.y
+			tileX = Camera.convert("x", Level.tiles[i].x)
+			tileY = Camera.convert("y", Level.tiles[i].y)
 			-- Temporary setup until textures happen
 			if (Level.tiles[i].id == 1) then
 				love.graphics.setColor(255, 255, 255)
