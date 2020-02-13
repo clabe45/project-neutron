@@ -7,7 +7,7 @@ Camera = {
 }
 
 -- Add x and y directions
-function Camera.shift(direction)
+function Camera.update()
 	Camera.x = Player.x - windowWidth / 2
 	Camera.y = Player.y - windowHeight / 2
 	-- Checking the bounds of the level
