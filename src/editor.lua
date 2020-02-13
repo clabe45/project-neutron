@@ -1,11 +1,11 @@
 Editor = {
 	currentTile = 1,
-	currentEntity = 1
+	currentEntity = 1,
+	mode = "tile", -- Can be tile, entity, or item
+	commandMode = false,
+	commandModeLine = ""
 }
 
-Editor.commandMode = false
-Editor.commandModeLine = ""
-Editor.mode = "tile" -- Can be tile, entity, or item
 editorMode = true
 
 -- handleInput: Handles commandLine and level editor keys
@@ -49,7 +49,7 @@ function Editor.handleInput(key)
 			elseif (Editor.mode == "entity") then
 				Editor.currentEntity = Editor.currentEntity + 1
 			end
-		end 
+		end
 		if (key == "down") then
 			if (Editor.mode == "tile") then
 				Editor.mode = "entity"
