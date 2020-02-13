@@ -78,8 +78,13 @@ function love.keypressed(key, scancode, isrepeat)
 			isPaused = not isPaused
 		end
 	end
+	-- Open commandline
 	if (key == ";") then
 		Editor.commandMode = not Editor.commandMode
+	end
+	-- Quit the game
+	if (key == "escape") then
+		love.event.quit()
 	end
 end
 
