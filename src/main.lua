@@ -104,6 +104,7 @@ function love.update(dt)
 		Entities.checkCollision(Player)
 		Entities.applyGravity()
 		Entities.updateEntities()
+		Level.checkDoor()
 		Camera.update()
 	end
 end

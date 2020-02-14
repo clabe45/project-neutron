@@ -78,12 +78,6 @@ function Entities.checkCollision(entity)
 			if (attemptedX < Level.tiles[i].x + 25 and attemptedX + 25 > Level.tiles[i].x and entity.y < Level.tiles[i].y + 25 and entity.y + 50 > Level.tiles[i].y) then
 				collisionX = true
 			end
-		-- This is probably bad code (elseif cond). Move to check door?
-		elseif (Tiles[Level.tiles[i].id].name == "Door Marker") then
-			-- THIS NEXT
-			if ((Player.x >= windowHeight or Player.x <= 0)) then
-				print("Player has hit a door marker!")
-			end
 		end
 	end
 

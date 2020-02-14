@@ -10,7 +10,14 @@ Level = {
 	tiles = {
 		{}
 	},
-	tileCount = 0
+	tileCount = 0,
+	rooms = {
+		{
+			x = 975,
+			y = 200,
+			location = "newroom"
+		}
+	}
 }
 
 -- draw: Draws all loaded tiles
@@ -33,8 +40,10 @@ end
 
 -- checkDoor: Checks if the Player is at the edge of the world
 function Level.checkDoor()
-	if (Player.x >= windowHeight or Player.x <= 0) then
-		print("Player has hit a door marker!")
+	for i=1,#Level.rooms do
+		if (Player.x == Level.rooms[i].x and Player.y == Level.rooms[i].y) then
+			print("Teleporting player to " .. Level.rooms[i].location)
+		end
 	end
 end
 
