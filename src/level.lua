@@ -37,6 +37,11 @@ function Level.addTile(x, y, id)
 	Level.tiles[Level.tileCount] = {x = x, y = y, id = id}
 end
 
+-- list: Lists all the levels
+function Level.list()
+	return love.filesystem.getDirectoryItems("levels")
+end
+
 -- clear: removes all tiles currently drawn
 function Level.clear()
 	for i=1,Level.tileCount do

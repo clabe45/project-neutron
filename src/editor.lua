@@ -116,6 +116,12 @@ function Editor.executeCommand()
 	-- :clear (clears level)
 	elseif (Editor.commandModeLine:sub(1, 5) == "clear") then
 		Level.clear()
+	-- :list (Prints all the levels to the commandline
+	elseif (Editor.commandModeLine:sub(1, 4) == "list") then
+		local levelList = Level.list()
+		for i=1,#levelList do
+			print(levelList[i])
+		end
 	else
 		print("Error. Command not found.")
 	end
