@@ -31,6 +31,13 @@ function Level.draw()
 	end
 end
 
+-- checkDoor: Checks if the Player is at the edge of the world
+function Level.checkDoor()
+	if (Player.x >= windowHeight or Player.x <= 0) then
+		print("Player has hit a door marker!")
+	end
+end
+
 -- addTile: Adds a new tile to the level
 function Level.addTile(x, y, id)
 	Level.tileCount = Level.tileCount + 1

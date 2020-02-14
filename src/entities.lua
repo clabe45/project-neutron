@@ -13,6 +13,7 @@ Entities = {
 -- spawnEntity: creates an entity at (x, y) and loads it into the Entities object
 -- TODO: Take out health parameter and have object provide it
 function Entities.spawnEntity(x, y, health, id)
+	-- Spawn zombie
 	if (id == 1) then
 		Entities.entities[Entities.entityCount + 1] = {id = id, x = x, y = y, dx = 0, dy = 0, Zombie.width, Zombie.height, hp = health, isFalling = false}
 	end
@@ -67,13 +68,22 @@ function Entities.checkCollision(entity)
 	local collisionY = false
 
 	for i=1,Level.tileCount do
-		if (entity.x < Level.tiles[i].x + 25 and entity.x + 25 > Level.tiles[i].x and attemptedY < Level.tiles[i].y + 25 and attemptedY + 50 > Level.tiles[i].y) then
-			entity.dy = 0
-			entity.isFalling = false
-			collisionY = true
-		end
-		if (attemptedX < Level.tiles[i].x + 25 and attemptedX + 25 > Level.tiles[i].x and entity.y < Level.tiles[i].y + 25 and entity.y + 50 > Level.tiles[i].y) then
-			collisionX = true
+		-- Apply only to solid blocks
+		if (Tiles[Level.tiles[i].id].category == "block") then
+			if (entity.x < Level.tiles[i].x + 25 and entity.x + 25 > Level.tiles[i].x and attemptedY < Level.tiles[i].y + 25 and attemptedY + 50 > Level.tiles[i].y) then
+				entity.dy = 0
+				entity.isFalling = false
+				collisionY = true
+			end
+			if (attemptedX < Level.tiles[i].x + 25 and attemptedX + 25 > Level.tiles[i].x and entity.y < Level.tiles[i].y + 25 and entity.y + 50 > Level.tiles[i].y) then
+				collisionX = true
+			end
+		-- This is probably bad code (elseif cond). Move to check door?
+		elseif (Tiles[Level.tiles[i].id].name == "Door Marker") then
+			-- THIS NEXT
+			if ((Player.x >= windowHeight or Player.x <= 0)) then
+				print("Player has hit a door marker!")
+			end
 		end
 	end
 

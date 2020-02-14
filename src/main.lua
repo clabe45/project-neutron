@@ -50,7 +50,6 @@ function love.load()
 	windowHeight = love.graphics.getHeight()
 	love.window.setTitle("Project Neutron")
 	love.keyboard.setKeyRepeat(true)
-	-- May change to the parent for other data like savegame
 	love.filesystem.setIdentity("testgame_v2")
 	Entities.spawnEntity(250, 250, 25, 1)
 end
