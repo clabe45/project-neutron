@@ -15,7 +15,9 @@ Level = {
 		{
 			x = 975,
 			y = 200,
-			location = "newroom"
+			location = "newroom",
+			newX = 200,
+			newY = 200
 		}
 	}
 }
@@ -41,10 +43,20 @@ end
 -- checkDoor: Checks if the Player is at the edge of the world
 function Level.checkDoor()
 	for i=1,#Level.rooms do
+		-- Also check for outer player box for opposite sides
 		if (Player.x == Level.rooms[i].x and Player.y == Level.rooms[i].y) then
-			print("Teleporting player to " .. Level.rooms[i].location)
+			Level.gotoRoom(Level.rooms[i].location, Level.rooms[i].newX, Level.rooms[i].newY)
 		end
 	end
+end
+
+-- gotoRoom: Loads a new room and places the player at the coords
+function Level.gotoRoom(room, x, y)
+	print("Room " .. room .. " loaded.")
+	Level.clear()
+	Level.read(room)
+	Player.x = x
+	Player.y = y
 end
 
 -- addTile: Adds a new tile to the level
