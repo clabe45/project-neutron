@@ -81,6 +81,7 @@ end
 
 -- save: writes the current tiles to a file
 function Level.save(levelName)
+	levelName = "levels/" .. levelName -- Writing levels to the levels directory
 	-- Creating a file 'levelName' and adding the width/height
 	love.filesystem.write(levelName, Level.width .. " " .. Level.height .. "\n")
 	-- Write the doors to the file
@@ -104,7 +105,7 @@ end
 
 -- read: reads a file and draws tiles from it
 function Level.read(levelName)
-	local rawLevelData = love.filesystem.read(levelName)
+	local rawLevelData = love.filesystem.read("levels/" .. levelName)
 	-- Check if file exists
 	if (rawLevelData == nil) then
 		print("File '" .. levelName .. "' not found.")
