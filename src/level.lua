@@ -131,7 +131,7 @@ function Level.read(levelName)
 			break
 		end
 		levelLineData = split(levelLines[i], " ")
-		Level.rooms[i] = {x = tonumber(levelLineData[1]), y = tonumber(levelLineData[2]), location = levelLineData[3], newX = tonumber(levelLineData[4]), newY = tonumber(levelLineData[5])}
+		Level.rooms[#Level.rooms+1] = {x = tonumber(levelLineData[1]), y = tonumber(levelLineData[2]), location = levelLineData[3], newX = tonumber(levelLineData[4]), newY = tonumber(levelLineData[5])}
 	end
 
 	-- Load the tiles 
