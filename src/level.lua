@@ -152,7 +152,7 @@ function Level.read(levelName)
 			--break
 		--end
 		levelLineData = split(levelLines[k], " ")
-		Entities.spawnEntity(tonumber(levelLineData[1]), tonumber(levelLineData[2]), 100, tonumber(levelLineData[3]))
+		Entities.spawnEntity(tonumber(levelLineData[1]), tonumber(levelLineData[2]), tonumber(levelLineData[3]))
 	end
 	print("Loaded '" .. levelName .. "' successfully.")
 end

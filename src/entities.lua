@@ -12,10 +12,11 @@ Entities = {
 
 -- spawnEntity: creates an entity at (x, y) and loads it into the Entities object
 -- TODO: Take out health parameter and have object provide it
-function Entities.spawnEntity(x, y, health, id)
+-- Maybe change the id == 1 cond to list[i]
+function Entities.spawnEntity(x, y, id)
 	-- Spawn zombie
 	if (id == 1) then
-		Entities.entities[Entities.entityCount + 1] = {id = id, x = x, y = y, dx = 0, dy = 0, Zombie.width, Zombie.height, hp = health, isFalling = false}
+		Entities.entities[Entities.entityCount + 1] = {id = id, x = x, y = y, dx = 0, dy = 0, Zombie.width, Zombie.height, hp = Zombie.health, isFalling = false}
 	end
 	Entities.entityCount = Entities.entityCount + 1
 end
