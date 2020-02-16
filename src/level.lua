@@ -76,14 +76,29 @@ function Level.clear()
 		Level.tiles[i] = nil
 	end
 	Level.tileCount = 0
+	Level.rooms = {}
 end
 
 -- save: writes the current tiles to a file
 function Level.save(levelName)
-	love.filesystem.write(levelName, "800 600")
-	for i=1,Level.tileCount do
-		love.filesystem.append(levelName, "\n" .. Level.tiles[i].x .. " " .. Level.tiles[i].y .. " " .. Level.tiles[i].id)
+	-- Creating a file 'levelName' and adding the width/height
+	love.filesystem.write(levelName, Level.width .. " " .. Level.height .. "\n")
+	-- Write the doors to the file
+	love.filesystem.append(levelName, "DOORS\n")
+	for i=1,#Level.rooms do
+		love.filesystem.append(levelName, Level.rooms[i].x .. " " .. Level.rooms[i].y .. " " .. Level.rooms[i].location .. " " .. Level.rooms[i].newX .. " " .. Level.rooms[i].newY .. "\n")
 	end
+	-- Write the tiles to the file
+	love.filesystem.append(levelName, "TILES\n")
+	for i=1,Level.tileCount do
+		love.filesystem.append(levelName, Level.tiles[i].x .. " " .. Level.tiles[i].y .. " " .. Level.tiles[i].id .. "\n")
+	end
+	-- Write the entities to the file
+	love.filesystem.append(levelName, "ENTITIES\n")
+	for i=1,Entities.entityCount do
+		love.filesystem.append(levelName, Entities.entities[i].x .. " " .. Entities.entities[i].y .. " " .. Entities.entities[i].id .. "\n")
+	end
+	-- Print success message
 	print("Written '" .. levelName .. "' to file.")
 end
 
@@ -97,12 +112,47 @@ function Level.read(levelName)
 	end
 
 	local levelLines = split(rawLevelData, "\n")
+
+	-- Extracting the dimensions of the level
+	local levelDimensions = split(levelLines[1], " ")
+	Level.width = tonumber(levelDimensions[1])
+	Level.height = tonumber(levelDimensions[2])
+
+	-- Values needed for the loops
 	local levelLineData
-	-- BEWARE LINE 1, IT IS META DATA
-	for i=2,#levelLines do
+	local i = 3 -- For door loop (line 1 is dimensions, 2 is a title, so 3 is where we start)
+	local j = 0 -- For tile loop
+	local k = 0 -- For item loop
+
+	-- Load the doors
+	for i=i,#levelLines do
+		if (levelLines[i] == "TILES") then
+			j = i+1 -- To skip the TILES line
+			break
+		end
 		levelLineData = split(levelLines[i], " ")
-		Level.tiles[i - 1] = {x = tonumber(levelLineData[1]), y = tonumber(levelLineData[2]), id = tonumber(levelLineData[3])}
+		Level.rooms[i] = {x = tonumber(levelLineData[1]), y = tonumber(levelLineData[2]), location = levelLineData[3], newX = tonumber(levelLineData[4]), newY = tonumber(levelLineData[5])}
+	end
+
+	-- Load the tiles 
+	for j=j,#levelLines do
+		if (levelLines[j] == "ENTITIES") then
+			k = j+1 -- To skip the ENTITIES line
+			break
+		end
+		levelLineData = split(levelLines[j], " ")
+		Level.tiles[Level.tileCount+1] = {x = tonumber(levelLineData[1]), y = tonumber(levelLineData[2]), id = tonumber(levelLineData[3])}
 		Level.tileCount = Level.tileCount + 1
+	end
+
+	-- Load the entities
+	for k=k,#levelLines-1 do -- -1 to avoid EOF
+		--if (levelLines[i] == "ITEMS") then
+			--l = k
+			--break
+		--end
+		levelLineData = split(levelLines[k], " ")
+		Entities.spawnEntity(tonumber(levelLineData[1]), tonumber(levelLineData[2]), 100, tonumber(levelLineData[3]))
 	end
 	print("Loaded '" .. levelName .. "' successfully.")
 end
