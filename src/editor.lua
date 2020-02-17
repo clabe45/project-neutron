@@ -25,7 +25,7 @@ function Editor.handleInput(key)
 				or key == "lalt" or key == "ralt" or key == "tab"
 				or key == "lctrl" or key == "rctrl" or key == "up"
 				or key == "down" or key == "left" or key == "right"
-				or key == "escape") then
+				or key == "escape" or key == "m1" or key == "m2") then
 				key = ""
 			end
 			Editor.commandModeLine = Editor.commandModeLine .. key
