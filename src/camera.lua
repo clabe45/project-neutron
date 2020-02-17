@@ -23,9 +23,6 @@ function Camera.update()
 	if (Camera.y > (Level.height - windowHeight)) then
 		Camera.y = Level.height - windowHeight
 	end
-
-	-- Moving the camera
-	--Camera.x = Camera.x + direction
 end
 
 function Camera.convert(axis, value)
