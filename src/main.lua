@@ -1,4 +1,5 @@
 -- TODO: Fix bug on clipping, seems to occur when the player falls the .5 pixel when crossing gaps
+love.graphics.setDefaultFilter("nearest", "nearest")
 require("level")
 require("entities")
 require("player")
@@ -72,6 +73,10 @@ function love.keypressed(key, scancode, isrepeat)
 			hitboxPlayerX = Player.x + 25;
 			hitboxPlayerY = Player.y + 15;
 		end
+		-- Player airdash
+		if (key == "d" and not editorMode) then
+			Player.airdash()
+		end
 		-- Pausing
 		if (key == "return") then
 			print("Pause.")
@@ -91,17 +96,20 @@ end
 function love.update(dt)
 	-- Normal physics update
 	if (not editorMode and not isPaused) then
-		-- Check Keys
-		if (love.keyboard.isDown("left")) then
-			Player.dx = -5
-		elseif (love.keyboard.isDown("right")) then
-			Player.dx = 5
-		else
-			Player.dx = 0
+		-- Check Keys, only if a dash isn't happening
+		if (not Player.isDashing) then
+			if (love.keyboard.isDown("left")) then
+				Player.dx = -5
+			elseif (love.keyboard.isDown("right")) then
+				Player.dx = 5
+			else
+				Player.dx = 0
+			end
 		end
 		-- Update positions
 		Player.dy = Player.dy + .5 -- Gravity
 		Entities.checkCollision(Player)
+		Player.updatePhysics()
 		Entities.applyGravity()
 		Entities.updateEntities()
 		Level.checkDoor()

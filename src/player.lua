@@ -7,7 +7,8 @@ Player = {
 	hitboxY = 50,
 	idleSprite = love.graphics.newImage("assets/char_sprites/MC.png"),
 	spriteOffsetX = 18,
-	spriteOffsetY = 20
+	spriteOffsetY = 20,
+	isDashing = false
 }
 
 -- drawPlayer: Draws the player sprite
@@ -19,5 +20,24 @@ function Player.drawPlayer()
 	love.graphics.setColor(1, 1, 1, 1)
 	-- The graphic is currently being blown up 2x, this results in some fuzziness
 	love.graphics.draw(Player.idleSprite, Camera.convert("x", Player.x), Camera.convert("y", Player.y), 0, 2, 2, Player.spriteOffsetX, Player.spriteOffsetY)
+end
+
+function Player.airdash()
+	-- dx should depend on direction of player face
+	if (not Player.isDashing) then
+		print("Dashed")
+		Player.dx = Player.dx + 15
+		Player.isDashing = true
+	end
+end
+
+function Player.updatePhysics()
+	if (Player.isDashing) then
+		if (not Player.dx == 0) then
+			Player.dx = Player.dx - 1
+		elseif (Player.dy == 0) then
+			Player.isDashing = false
+		end
+	end
 end
 
