@@ -5,6 +5,7 @@ require("entities")
 require("player")
 require("editor")
 require("camera")
+require("menu")
 
 Tiles = {
 	{
@@ -38,11 +39,6 @@ function split(string, character)
 	end
 	arr[arrIndex] = string:sub(lastStringIndex, j - 1)
 	return arr
-end
-
--- drawMenu: Will later be used to draw a menu showing status
-function drawMenu()
-	print("Menu.")
 end
 
 -- load: Sets initial love values and creates a test enemy
@@ -120,7 +116,7 @@ end
 
 function love.draw()
 	if (isPaused) then
-		drawMenu()
+		Menu.drawMenu()
 	else
 		Level.draw()
 		if (not editorMode) then
