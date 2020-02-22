@@ -76,8 +76,8 @@ function love.keypressed(key, scancode, isrepeat)
 		end
 		-- Pausing
 		if (key == "return") then
-			print("Pause.")
 			isPaused = not isPaused
+			Menu.selection = 1
 		end
 	end
 	-- Open commandline
@@ -87,6 +87,16 @@ function love.keypressed(key, scancode, isrepeat)
 	-- Quit the game
 	if (key == "escape") then
 		love.event.quit()
+	end
+	if (love.keyboard.isDown("up")) then
+		if (Menu.isActive) then
+			Menu.shiftUp()
+		end
+	end
+	if (love.keyboard.isDown("down")) then
+		if (Menu.isActive) then
+			Menu.shiftDown()
+		end
 	end
 end
 
@@ -117,6 +127,7 @@ end
 function love.draw()
 	if (isPaused) then
 		Menu.drawMenu()
+		Menu.isActive = true
 	else
 		Level.draw()
 		if (not editorMode) then
