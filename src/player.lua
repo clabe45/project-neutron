@@ -14,7 +14,7 @@ Player = {
 		love.graphics.newImage("assets/char_sprites/MC/walk/frame5.png"),
 		love.graphics.newImage("assets/char_sprites/MC/walk/frame6.png"),
 	},
-	walkFrame = 0,
+	walkFrame = 1,
 	spriteOffsetX = 18,
 	spriteOffsetY = 20,
 	isWalking = false,
@@ -25,8 +25,8 @@ Player = {
 function Player.drawPlayer()
 	local currentSprite = Player.idleSprite
 	-- The hitbox
-	love.graphics.setColor(0, 1, 0, .1)
-	love.graphics.rectangle('fill', Camera.convert("x", Player.x), Camera.convert("y",Player.y), Player.hitboxX, Player.hitboxY)
+	--love.graphics.setColor(0, 1, 0, .1)
+	--love.graphics.rectangle('fill', Camera.convert("x", Player.x), Camera.convert("y",Player.y), Player.hitboxX, Player.hitboxY)
 
 	-- Make the walking animation
 	if (Player.isWalking) then
@@ -34,11 +34,14 @@ function Player.drawPlayer()
 		if (Player.walkFrame+1 > 6) then
 			Player.walkFrame = 1
 		else
-			Player.walkFrame = Player.walkFrame + 1
+			if (frameCounter % 6 == 0) then
+				Player.walkFrame = Player.walkFrame + 1
+			end
 		end
 		currentSprite = Player.walkFrames[Player.walkFrame]
 	else
-		Player.walkFrame = 0
+		Player.walkFrame = 1
+		currentSprite = Player.idleSprite
 	end
 
 	-- Draw the graphic
