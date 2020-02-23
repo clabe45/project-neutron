@@ -22,6 +22,7 @@ Tiles = {
 isPaused = false
 -- variable so the editor can do :w and know where to save to
 currentLevel = ""
+frameCounter = 0
 
 -- split: takes a string and returns an array with it split into smaller segments per 'character'
 function split(string, character)
@@ -106,10 +107,13 @@ function love.update(dt)
 		-- Check Keys, only if a dash isn't happening
 		if (not Player.isDashing) then
 			if (love.keyboard.isDown("left")) then
+				Player.isWalking = true
 				Player.dx = -5
 			elseif (love.keyboard.isDown("right")) then
+				Player.isWalking = true
 				Player.dx = 5
 			else
+				Player.isWalking = false
 				Player.dx = 0
 			end
 		end
@@ -121,6 +125,11 @@ function love.update(dt)
 		Entities.updateEntities()
 		Level.checkDoor()
 		Camera.update()
+	end
+	-- Add a way for animations to tell what frame they're on
+	frameCounter = frameCounter + 1
+	if (frameCounter > 60) then
+		frameCounter = 0
 	end
 end
 
