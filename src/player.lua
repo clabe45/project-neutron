@@ -18,12 +18,15 @@ Player = {
 	spriteOffsetX = 18,
 	spriteOffsetY = 20,
 	isWalking = false,
-	isDashing = false
+	isDashing = false,
+	forwardFace = true
 }
 
 -- drawPlayer: Draws the player sprite
 function Player.drawPlayer()
 	local currentSprite = Player.idleSprite
+	local scaleX = 2
+	local faceOffsetX = 0 -- Responsible for when the player faces left to correct hitbox proximity
 	-- The hitbox
 	--love.graphics.setColor(0, 1, 0, .1)
 	--love.graphics.rectangle('fill', Camera.convert("x", Player.x), Camera.convert("y",Player.y), Player.hitboxX, Player.hitboxY)
@@ -44,10 +47,15 @@ function Player.drawPlayer()
 		currentSprite = Player.idleSprite
 	end
 
+	if (not Player.forwardFace) then
+		scaleX = -2
+		faceOffsetX = 13
+	end
+
 	-- Draw the graphic
 	love.graphics.setColor(1, 1, 1, 1)
 	-- The graphic is currently being blown up 2x, this results in some fuzziness
-	love.graphics.draw(currentSprite, Camera.convert("x", Player.x), Camera.convert("y", Player.y), 0, 2, 2, Player.spriteOffsetX, Player.spriteOffsetY)
+	love.graphics.draw(currentSprite, Camera.convert("x", Player.x), Camera.convert("y", Player.y), 0, scaleX, 2, Player.spriteOffsetX+faceOffsetX, Player.spriteOffsetY)
 end
 
 function Player.airdash()

@@ -108,9 +108,11 @@ function love.update(dt)
 		if (not Player.isDashing) then
 			if (love.keyboard.isDown("left")) then
 				Player.isWalking = true
+				Player.forwardFace = false
 				Player.dx = -5
 			elseif (love.keyboard.isDown("right")) then
 				Player.isWalking = true
+				Player.forwardFace = true
 				Player.dx = 5
 			else
 				Player.isWalking = false
