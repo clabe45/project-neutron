@@ -135,7 +135,7 @@ function Level.read(levelName)
 		Level.rooms[#Level.rooms+1] = {x = tonumber(levelLineData[1]), y = tonumber(levelLineData[2]), location = levelLineData[3], newX = tonumber(levelLineData[4]), newY = tonumber(levelLineData[5])}
 	end
 
-	-- Load the tiles 
+	-- Load the tiles
 	for j=j,#levelLines do
 		if (levelLines[j] == "ENTITIES") then
 			k = j+1 -- To skip the ENTITIES line

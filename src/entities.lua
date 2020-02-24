@@ -15,7 +15,7 @@ Entities = {
 -- Maybe change the id == 1 cond to list[i]
 function Entities.spawnEntity(x, y, id)
 	-- Spawn zombie
-	if (id == 1) then 
+	if (id == 1) then
 		Entities.entities[Entities.entityCount + 1] = {id = id, x = x, y = y, dx = 0, dy = 0, width = Zombie.width, height = Zombie.height, health= Zombie.health, isFalling = false, invulnCooldown = 0}
 	end
 	Entities.entityCount = Entities.entityCount + 1
