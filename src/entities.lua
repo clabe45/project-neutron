@@ -16,7 +16,7 @@ Entities = {
 function Entities.spawnEntity(x, y, id)
 	-- Spawn zombie
 	if (id == 1) then
-		Entities.entities[Entities.entityCount + 1] = {id = id, x = x, y = y, dx = 0, dy = 0, Zombie.width, Zombie.height, hp = Zombie.health, isFalling = false}
+		Entities.entities[Entities.entityCount + 1] = {id = id, x = x, y = y, dx = 0, dy = 0, width = Zombie.width, height = Zombie.height, hp = Zombie.health, isFalling = false}
 	end
 	Entities.entityCount = Entities.entityCount + 1
 end
@@ -29,7 +29,7 @@ function Entities.drawEntities()
 		entityY = Camera.convert("y", Entities.entities[i].y)
 		-- Set the color and draw a rectangle based on entity
 		love.graphics.setColor(1, 0, 0)
-		love.graphics.rectangle('fill', entityX, entityY, Player.hitboxX, Player.hitboxY)
+		love.graphics.rectangle('fill', entityX, entityY, Entities.entities[i].width, Entities.entities[i].height)
 	end
 end
 -- Next up, detract hp when entity is hit, possibly make them blink, then despawn when hp is below 0

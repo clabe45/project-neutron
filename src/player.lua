@@ -3,8 +3,8 @@ Player = {
 	y = 0,
 	dx = 0,
 	dy = 0,
-	hitboxX = 25,
-	hitboxY = 50,
+	width = 25, -- aka player width
+	height = 50, -- aka player height
 	hurtboxX = 0,
 	hurtboxY = 0,
 	hurtboxWidth = 0,
@@ -34,8 +34,8 @@ function Player.drawPlayer()
 	local scaleX = 2
 	local faceOffsetX = 0 -- Responsible for when the player faces left to correct hitbox proximity
 	-- The hitbox
-	--love.graphics.setColor(0, 1, 0, .1)
-	--love.graphics.rectangle('fill', Camera.convert("x", Player.x), Camera.convert("y",Player.y), Player.hitboxX, Player.hitboxY)
+	love.graphics.setColor(0, 1, 0, .1)
+	love.graphics.rectangle('fill', Camera.convert("x", Player.x), Camera.convert("y",Player.y), Player.width, Player.height)
 
 	-- Make the walking animation
 	if (Player.isWalking) then

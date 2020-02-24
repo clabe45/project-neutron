@@ -1,7 +1,7 @@
 Zombie = {
 	name = "Zombie",
-	width = 50,
-	height = 100,
+	width = 25,
+	height = 50,
 	health = 100
 }
 
