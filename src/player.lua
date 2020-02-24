@@ -5,6 +5,11 @@ Player = {
 	dy = 0,
 	hitboxX = 25,
 	hitboxY = 50,
+	hurtboxX = 0,
+	hurtboxY = 0,
+	hurtboxWidth = 0,
+	hurtboxHeight = 0,
+	hurtboxDuration = 0,
 	idleSprite = love.graphics.newImage("assets/char_sprites/MC/MC.png"),
 	walkFrames = {
 		love.graphics.newImage("assets/char_sprites/MC/walk/frame1.png"),
@@ -19,6 +24,7 @@ Player = {
 	spriteOffsetY = 20,
 	isWalking = false,
 	isDashing = false,
+	isAttacking = false,
 	forwardFace = true
 }
 
@@ -61,18 +67,40 @@ end
 function Player.airdash()
 	-- dx should depend on direction of player face
 	if (not Player.isDashing) then
-		print("Dashed")
-		Player.dx = Player.dx + 15
+		if (Player.forwardFace) then
+			Player.dx = Player.dx + 15
+		else
+			Player.dx = Player.dx - 15
+		end
 		Player.isDashing = true
 	end
 end
 
+function Player.attack()
+	-- Depending on weapon equipped, the hurtbox will be bigger/smaller
+	Player.isAttacking = true
+	Player.hurtboxX = Camera.convert("x", Player.x + 25)
+	Player.hurtboxY = Camera.convert("y", Player.y + 15)
+	Player.hurtboxWidth = 20
+	Player.hurtboxHeight = 30
+	-- Have the attack last for a single frame
+	Player.hurtboxDuration = 5
+end
+
 function Player.updatePhysics()
+	-- Gradually slow dash down
 	if (Player.isDashing) then
 		if (not Player.dx == 0) then
 			Player.dx = Player.dx - 1
 		elseif (Player.dy == 0) then
 			Player.isDashing = false
+		end
+	end
+	-- End attack hurtbox after a certain length of time
+	if (Player.isAttacking) then
+		Player.hurtboxDuration = Player.hurtboxDuration - 1
+		if (Player.hurtboxDuration == 0) then
+			Player.isAttacking = false
 		end
 	end
 end

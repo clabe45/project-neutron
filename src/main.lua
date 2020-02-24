@@ -68,8 +68,7 @@ function love.keypressed(key, scancode, isrepeat)
 		end
 		-- Player attackbox
 		if (key == "z" and not editorMode) then
-			hitboxPlayerX = Player.x + 25;
-			hitboxPlayerY = Player.y + 15;
+			Player.attack()
 		end
 		-- Player airdash
 		if (key == "d" and not editorMode) then
@@ -145,10 +144,9 @@ function love.draw()
 			Player.drawPlayer()
 			Entities.drawEntities()
 			-- Draw the hitbox
-			if (hitboxPlayerX and hitboxPlayerY) then
-				love.graphics.setColor(1, 0, 0)
-				-- Depending on weapon equipped, the hitbox will be bigger/smaller
-				love.graphics.rectangle("fill", hitboxPlayerX, hitboxPlayerY, 20, 30)
+			if (Player.isAttacking) then
+				love.graphics.setColor(.5, 0, 0)
+				love.graphics.rectangle("fill", Player.hurtboxX, Player.hurtboxY, Player.hurtboxWidth, Player.hurtboxHeight)
 			end
 		end
 
