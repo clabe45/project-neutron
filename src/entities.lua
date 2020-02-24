@@ -71,12 +71,12 @@ function Entities.checkCollision(entity)
 	for i=1,Level.tileCount do
 		-- Apply only to solid blocks
 		if (Tiles[Level.tiles[i].id].category == "block") then
-			if (entity.x < Level.tiles[i].x + 25 and entity.x + 25 > Level.tiles[i].x and attemptedY < Level.tiles[i].y + 25 and attemptedY + 50 > Level.tiles[i].y) then
+			if (entity.x < Level.tiles[i].x + 25 and entity.x + entity.width > Level.tiles[i].x and attemptedY < Level.tiles[i].y + 25 and attemptedY + entity.height > Level.tiles[i].y) then
 				entity.dy = 0
 				entity.isFalling = false
 				collisionY = true
 			end
-			if (attemptedX < Level.tiles[i].x + 25 and attemptedX + 25 > Level.tiles[i].x and entity.y < Level.tiles[i].y + 25 and entity.y + 50 > Level.tiles[i].y) then
+			if (attemptedX < Level.tiles[i].x + 25 and attemptedX + entity.width > Level.tiles[i].x and entity.y < Level.tiles[i].y + 25 and entity.y + entity.height > Level.tiles[i].y) then
 				collisionX = true
 			end
 		end
