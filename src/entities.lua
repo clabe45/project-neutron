@@ -15,11 +15,16 @@ Entities = {
 -- Maybe change the id == 1 cond to list[i]
 function Entities.spawnEntity(x, y, id)
 	-- Spawn zombie
-	if (id == 1) then
-		Entities.entities[Entities.entityCount + 1] = {id = id, x = x, y = y, dx = 0, dy = 0, width = Zombie.width, height = Zombie.height, hp = Zombie.health, isFalling = false}
+	if (id == 1) then 
+		Entities.entities[Entities.entityCount + 1] = {id = id, x = x, y = y, dx = 0, dy = 0, width = Zombie.width, height = Zombie.height, health= Zombie.health, isFalling = false, invulnCooldown = 0}
 	end
 	Entities.entityCount = Entities.entityCount + 1
 end
+
+--function Entities.despawnEntity(id)
+	--for i,Entities.entityCount do
+		--if (id == i) then
+			--Entities.entities[i] = Entities.
 
 -- drawEntity: iterates over the Entities object and draws them to the screen
 function Entities.drawEntities()
@@ -58,6 +63,14 @@ function Entities.updateEntities()
 		if (Entities.entities[i].id == 1) then
 			Zombie.doBehaivor(Entities.entities[i])
 		end
+	end
+end
+
+-- damageEntity: Make the entity take damage
+function Entities.damageEntity(entity, damage, hasCooldown)
+	entity.health = entity.health - damage
+	if (entity.health <= 0) then
+		print("It's dead!")
 	end
 end
 

@@ -25,7 +25,9 @@ Player = {
 	isWalking = false,
 	isDashing = false,
 	isAttacking = false,
-	forwardFace = true
+	forwardFace = true,
+	health = 100,
+	weaponAttack = 40
 }
 
 -- drawPlayer: Draws the player sprite
@@ -79,20 +81,26 @@ end
 function Player.attack()
 	-- Depending on weapon equipped, the hurtbox will be bigger/smaller
 	Player.isAttacking = true
-	Player.hurtboxX = Camera.convert("x", Player.x + 25)
+
+	-- Placing the hitbox in front of the players head
+	if (Player.forwardFace) then
+		Player.hurtboxX = Camera.convert("x", Player.x + 25)
+	else
+		Player.hurtboxX = Camera.convert("x", Player.x - 25)
+	end
+
 	Player.hurtboxY = Camera.convert("y", Player.y + 15)
 	Player.hurtboxWidth = 20
 	Player.hurtboxHeight = 30
-	-- Have the attack last for a single frame
+	-- Have the attack last for a five frames
 	Player.hurtboxDuration = 5
 end
 
 function Player.checkHurtbox()
-	print("Checking for the hurty")
 	for i=1,Entities.entityCount do
 		local entity = Entities.entities[i]
 		if ((entity.x < Player.hurtboxX + Player.hurtboxWidth and entity.x + entity.width > Player.hurtboxX) or (entity.y < Player.hurtboxY + Player.hurtboxHeight and entity.y + entity.height > Player.hurtboxY)) then
-			print("We got a partial collision!")
+			Entities.damageEntity(entity, Player.weaponAttack, true)
 		end
 	end
 end
