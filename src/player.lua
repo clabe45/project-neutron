@@ -87,6 +87,16 @@ function Player.attack()
 	Player.hurtboxDuration = 5
 end
 
+function Player.checkHurtbox()
+	print("Checking for the hurty")
+	for i=1,Entities.entityCount do
+		local entity = Entities.entities[i]
+		if ((entity.x < Player.hurtboxX + Player.hurtboxWidth and entity.x + entity.width > Player.hurtboxX) or (entity.y < Player.hurtboxY + Player.hurtboxHeight and entity.y + entity.height > Player.hurtboxY)) then
+			print("We got a partial collision!")
+		end
+	end
+end
+
 function Player.updatePhysics()
 	-- Gradually slow dash down
 	if (Player.isDashing) then
@@ -98,6 +108,7 @@ function Player.updatePhysics()
 	end
 	-- End attack hurtbox after a certain length of time
 	if (Player.isAttacking) then
+		Player.checkHurtbox()
 		Player.hurtboxDuration = Player.hurtboxDuration - 1
 		if (Player.hurtboxDuration == 0) then
 			Player.isAttacking = false
