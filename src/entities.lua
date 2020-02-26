@@ -32,8 +32,15 @@ function Entities.drawEntities()
 	for i=1,Entities.entityCount do
 		entityX = Camera.convert("x", Entities.entities[i].x)
 		entityY = Camera.convert("y", Entities.entities[i].y)
-		-- Set the color and draw a rectangle based on entity
-		love.graphics.setColor(1, 0, 0)
+
+		-- If the enemy has been hit, draw it faded
+		if (Entities.entities[i].invulnCooldown == 0) then
+			love.graphics.setColor(1, 0, 0)
+		else
+			love.graphics.setColor(1, 0, 0, .5)
+		end
+
+		-- Draw a rectangle based on entity
 		love.graphics.rectangle('fill', entityX, entityY, Entities.entities[i].width, Entities.entities[i].height)
 	end
 end
@@ -63,12 +70,22 @@ function Entities.updateEntities()
 		if (Entities.entities[i].id == 1) then
 			Zombie.doBehaivor(Entities.entities[i])
 		end
+		-- Tick the cooldown downward
+		if (not (Entities.entities[i].invulnCooldown == 0)) then
+			Entities.entities[i].invulnCooldown = Entities.entities[i].invulnCooldown - 1
+		end
 	end
 end
 
 -- damageEntity: Make the entity take damage
 function Entities.damageEntity(entity, damage, hasCooldown)
-	entity.health = entity.health - damage
+	-- if the entity's cooldown is 0, damage the entity and renew it
+	if (entity.invulnCooldown == 0) then
+		print("Damage taken!")
+		entity.health = entity.health - damage
+		entity.invulnCooldown = 60
+	end
+	-- If the enemy is dead, do this
 	if (entity.health <= 0) then
 		print("It's dead!")
 	end
