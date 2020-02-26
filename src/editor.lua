@@ -78,7 +78,7 @@ function Editor.handleInput(key)
 			if (Editor.mode == "entity") then
 				-- Replace magic number
 				-- Add something to check for mouseup?
-				Entities.spawnEntity(x, y, 50, Editor.currentEntity)
+				Entities.spawnEntity(x, y, Editor.currentEntity)
 			end
 		end
 	end
