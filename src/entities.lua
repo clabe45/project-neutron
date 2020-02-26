@@ -21,10 +21,24 @@ function Entities.spawnEntity(x, y, id)
 	Entities.entityCount = Entities.entityCount + 1
 end
 
---function Entities.despawnEntity(id)
-	--for i,Entities.entityCount do
-		--if (id == i) then
-			--Entities.entities[i] = Entities.
+-- despawnEntity: Remove an entitiy from the table by overwriting it with the one in front of it
+function Entities.despawnEntity(id)
+	local shift = false
+	for i=1,Entities.entityCount do
+		if (id == i) then
+			shift = true
+		end
+		if (shift and not (i >= Entities.entityCount)) then
+			Entities.entities[i] = Entities.entities[i+1]
+			Entities.entities[i].id = i
+			Entities.entityCount = Entities.entityCount - 1
+		end
+		if (shift and (i == Entities.entityCount)) then
+			Entities.entities[i] = nil
+			Entities.entityCount = Entities.entityCount - 1
+		end
+	end
+end
 
 -- drawEntity: iterates over the Entities object and draws them to the screen
 function Entities.drawEntities()
@@ -81,13 +95,12 @@ end
 function Entities.damageEntity(entity, damage, hasCooldown)
 	-- if the entity's cooldown is 0, damage the entity and renew it
 	if (entity.invulnCooldown == 0) then
-		print("Damage taken!")
 		entity.health = entity.health - damage
 		entity.invulnCooldown = 60
 	end
 	-- If the enemy is dead, do this
 	if (entity.health <= 0) then
-		print("It's dead!")
+		Entities.despawnEntity(entity.id)
 	end
 end
 
