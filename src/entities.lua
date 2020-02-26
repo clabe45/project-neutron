@@ -14,12 +14,9 @@ Entities = {
 -- TODO: Take out health parameter and have object provide it
 -- Maybe change the id == 1 cond to list[i]
 function Entities.spawnEntity(x, y, id)
-	print("Func called")
-	print(id)
 	-- Bug, spawnEntity is being hit a bunch by mouseclick
 	-- Spawn zombie
 	if (id == 1) then
-		print("Zombie called")
 		Entities.entities[Entities.entityCount + 1] = {index = Entities.entityCount + 1, id = id, x = x, y = y, dx = 0, dy = 0, width = Zombie.width, height = Zombie.height, health= Zombie.health, isFalling = false, invulnCooldown = 0}
 	end
 	Entities.entityCount = Entities.entityCount + 1
