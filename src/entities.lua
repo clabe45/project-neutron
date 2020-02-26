@@ -14,23 +14,24 @@ Entities = {
 -- TODO: Take out health parameter and have object provide it
 -- Maybe change the id == 1 cond to list[i]
 function Entities.spawnEntity(x, y, id)
+	-- Bug, spawnEntity is being hit a bunch by mouseclick
 	-- Spawn zombie
 	if (id == 1) then
-		Entities.entities[Entities.entityCount + 1] = {id = id, x = x, y = y, dx = 0, dy = 0, width = Zombie.width, height = Zombie.height, health= Zombie.health, isFalling = false, invulnCooldown = 0}
+		Entities.entities[Entities.entityCount + 1] = {index = Entities.entityCount + 1, id = id, x = x, y = y, dx = 0, dy = 0, width = Zombie.width, height = Zombie.height, health= Zombie.health, isFalling = false, invulnCooldown = 0}
 	end
 	Entities.entityCount = Entities.entityCount + 1
 end
 
 -- despawnEntity: Remove an entitiy from the table by overwriting it with the one in front of it
-function Entities.despawnEntity(id)
+function Entities.despawnEntity(index)
 	local shift = false
 	for i=1,Entities.entityCount do
-		if (id == i) then
+		if (index == i) then
 			shift = true
 		end
 		if (shift and not (i >= Entities.entityCount)) then
 			Entities.entities[i] = Entities.entities[i+1]
-			Entities.entities[i].id = i
+			Entities.entities[i].index = i
 			Entities.entityCount = Entities.entityCount - 1
 		end
 		if (shift and (i == Entities.entityCount)) then
@@ -72,6 +73,7 @@ end
 
 -- applyGravity: Applys the force of gravity (.5) to all entities
 function Entities.applyGravity()
+	print(Entities.entityCount)
 	for i=1,Entities.entityCount do
 		Entities.entities[i].dy = Entities.entities[i].dy + .5
 	end
@@ -100,7 +102,7 @@ function Entities.damageEntity(entity, damage, hasCooldown)
 	end
 	-- If the enemy is dead, do this
 	if (entity.health <= 0) then
-		Entities.despawnEntity(entity.id)
+		Entities.despawnEntity(entity.index)
 	end
 end
 
