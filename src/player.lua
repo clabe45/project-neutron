@@ -99,7 +99,7 @@ end
 function Player.checkHurtbox()
 	for i=1,Entities.entityCount do
 		local entity = Entities.entities[i]
-		if ((entity.x < Player.hurtboxX + Player.hurtboxWidth and entity.x + entity.width > Player.hurtboxX) or (entity.y < Player.hurtboxY + Player.hurtboxHeight and entity.y + entity.height > Player.hurtboxY)) then
+		if ((entity.x < Player.hurtboxX + Player.hurtboxWidth and entity.x + entity.width > Player.hurtboxX) and (entity.y < Player.hurtboxY + Player.hurtboxHeight and entity.y + entity.height > Player.hurtboxY)) then
 			Entities.damageEntity(entity, Player.weaponAttack, true)
 		end
 	end
