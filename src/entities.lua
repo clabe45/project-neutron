@@ -73,7 +73,6 @@ end
 
 -- applyGravity: Applys the force of gravity (.5) to all entities
 function Entities.applyGravity()
-	print(Entities.entityCount)
 	for i=1,Entities.entityCount do
 		Entities.entities[i].dy = Entities.entities[i].dy + .5
 	end
