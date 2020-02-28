@@ -11,6 +11,7 @@ function Menu.drawMenu()
 		-- Draw main window
 		love.graphics.setColor(1, 1, 1, 1)
 		love.graphics.rectangle('fill', 0, 0, windowWidth, windowHeight)
+		Menu.drawElement("list", 200, windowHeight-160, 500, windowHeight-40, "IDK", 0)
 		-- Draw list items
 		Menu.drawElement("list", 20, windowHeight-160, 150, 20, "Equipment", 1)
 		Menu.drawElement("list", 20, windowHeight-130, 150, 20, "Items", 2)
