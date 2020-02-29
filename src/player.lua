@@ -70,9 +70,9 @@ function Player.airdash()
 	-- dx should depend on direction of player face
 	if (not Player.isDashing) then
 		if (Player.forwardFace) then
-			Player.dx = Player.dx + 15
+			Player.dx = Player.dx + 25
 		else
-			Player.dx = Player.dx - 15
+			Player.dx = Player.dx - 25
 		end
 		Player.isDashing = true
 	end
@@ -108,9 +108,14 @@ end
 function Player.updatePhysics()
 	-- Gradually slow dash down
 	if (Player.isDashing) then
-		if (not Player.dx == 0) then
-			Player.dx = Player.dx - 1
-		elseif (Player.dy == 0) then
+		if (Player.dx ~= 0) then
+			-- Slow the player's dx down
+			if (Player.dx < 0) then
+				Player.dx = Player.dx + 1
+			elseif (Player.dx > 0) then
+				Player.dx = Player.dx - 1
+			end
+		elseif (Player.isFalling == false) then
 			Player.isDashing = false
 		end
 	end
