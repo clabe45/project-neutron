@@ -1,5 +1,8 @@
 Zombie = {
 	name = "Zombie",
+	walkFrames = {
+		love.graphics.newImage("assets/entity_sprites/zombie/zombie_walk1.png")
+	},
 	width = 25,
 	height = 50,
 	health = 100
@@ -28,5 +31,11 @@ function Zombie.doBehaivor(this)
 	else
 		Zombie.idle(this)
 	end
+end
+
+function Zombie.draw(this)
+	entityX = Camera.convert("x", this.x)
+	entityY = Camera.convert("y", this.y)
+	love.graphics.draw(Zombie.walkFrames[1], entityX, entityY, 0, 2, 2, 0, 0)
 end
 
