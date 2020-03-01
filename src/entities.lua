@@ -52,11 +52,11 @@ function Entities.drawEntities()
 		if (Entities.entities[i].invulnCooldown == 0) then
 			love.graphics.setColor(1, 1, 1)
 		else
-			love.graphics.setColor(1, 0, 0, .5)
+			love.graphics.setColor(1, 1, 1, .5)
 		end
 
 		-- Draw a rectangle based on entity
-		love.graphics.rectangle('fill', entityX, entityY, Entities.entities[i].width, Entities.entities[i].height)
+		--love.graphics.rectangle('fill', entityX, entityY, Entities.entities[i].width, Entities.entities[i].height)
 		Entities.list[Entities.entities[i].id].draw(Entities.entities[i])
 
 	end
