@@ -22,26 +22,30 @@ function Entities.spawnEntity(x, y, id)
 	Entities.entityCount = Entities.entityCount + 1
 end
 
--- despawnEntity: Remove an entitiy from the table by overwriting it with the one in front of it
+-- despawnEntities: Remove an entitiy from the table by overwriting it with the one in front of it
 function Entities.despawnEntity(index)
-	local shift = false
+	local shift = false -- shift the entity list over to remove the entity
 	for i=1,Entities.entityCount do
 		if (index == i) then
 			shift = true
-		end
-		if (shift and not (i >= Entities.entityCount)) then
-			Entities.entities[i] = Entities.entities[i+1]
-			Entities.entities[i].index = i
-			Entities.entityCount = Entities.entityCount - 1
+			print("Despawning entity: " .. i)
 		end
 		if (shift and (i == Entities.entityCount)) then
+			print("2 was called!")
 			Entities.entities[i] = nil
-			Entities.entityCount = Entities.entityCount - 1
+			print("i="..i.." count:"..Entities.entityCount)
+		end
+		if (shift and (i < Entities.entityCount)) then
+			print("1 was called!")
+			Entities.entities[i] = Entities.entities[i+1]
+			Entities.entities[i].index = i
+			print("i="..i.." count:"..Entities.entityCount)
 		end
 	end
+	Entities.entityCount = Entities.entityCount - 1
 end
 
--- drawEntity: iterates over the Entities object and draws them to the screen
+-- drawEntities: iterates over the Entities object and draws them to the screen
 function Entities.drawEntities()
 	-- Loop over all the entities, incrementing by 1
 	for i=1,Entities.entityCount do
@@ -50,16 +54,17 @@ function Entities.drawEntities()
 
 		-- If the enemy has been hit, draw it faded
 		if (Entities.entities[i].invulnCooldown == 0) then
-			love.graphics.setColor(1, 0, 0)
+			love.graphics.setColor(1, 1, 1)
 		else
-			love.graphics.setColor(1, 0, 0, .5)
+			love.graphics.setColor(1, 1, 1, .5)
 		end
 
 		-- Draw a rectangle based on entity
-		love.graphics.rectangle('fill', entityX, entityY, Entities.entities[i].width, Entities.entities[i].height)
+		--love.graphics.rectangle('fill', entityX, entityY, Entities.entities[i].width, Entities.entities[i].height)
+		Entities.list[Entities.entities[i].id].draw(Entities.entities[i])
+
 	end
 end
--- Next up, detract hp when entity is hit, possibly make them blink, then despawn when hp is below 0
 
 -- jump: Allows an entity to jump
 function Entities.jump(entity)
