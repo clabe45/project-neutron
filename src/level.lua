@@ -22,14 +22,8 @@ Level = {
 	}
 }
 
-function Level.drawBackground()
-	love.graphics.setColor(.59, .29, 0, 1) -- Draw brown
-	love.graphics.rectangle("fill", 0, 0, windowWidth, windowHeight)
-end
-
 -- draw: Draws all loaded tiles
 function Level.draw()
-	Level.drawBackground()
 	if (Level.tileCount > 0) then
 		for i=1,Level.tileCount do
 			tileX = Camera.convert("x", Level.tiles[i].x)
