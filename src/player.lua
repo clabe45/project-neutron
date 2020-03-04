@@ -101,7 +101,7 @@ function Player.checkHurtbox()
 		local entity = Entities.entities[i]
 		-- Basically, mid-loop entityCount decreases as a result of an entity dying. The loop continues after, and then goes out of bounds of the entity table, and crashes.
 		if (entity == nil) then return end -- This is my duct tape.
-		if ((entity.x < Player.hurtboxX + Player.hurtboxWidth and entity.x + entity.width > Player.hurtboxX) and (entity.y < Player.hurtboxY + Player.hurtboxHeight and entity.y + entity.height > Player.hurtboxY)) then
+		if ((Camera.convert("x", entity.x) < Player.hurtboxX + Player.hurtboxWidth and Camera.convert("x", entity.x) + entity.width > Player.hurtboxX) and (Camera.convert("y", entity.y) < Player.hurtboxY + Player.hurtboxHeight and Camera.convert("y", entity.y) + entity.height > Player.hurtboxY)) then
 			Entities.damageEntity(entity, Player.weaponAttack, true)
 		end
 	end
