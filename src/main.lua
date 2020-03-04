@@ -6,6 +6,7 @@ require("player")
 require("editor")
 require("camera")
 require("menu")
+require("dialog")
 
 Tiles = {
 	{
@@ -73,6 +74,10 @@ function love.keypressed(key, scancode, isrepeat)
 		-- Player airdash
 		if (key == "d" and not editorMode) then
 			Player.airdash()
+		end
+		-- Map it to a for now, later change to z and have a choice in Player
+		if (key == "a" and not editorMode) then
+			Dialog.openDialog(1)
 		end
 		-- Pausing
 		if (key == "return") then
