@@ -25,6 +25,7 @@ Player = {
 	isWalking = false,
 	isDashing = false,
 	isAttacking = false,
+	isSpeaking = false,
 	forwardFace = true,
 	health = 100,
 	weaponAttack = 40
@@ -94,6 +95,35 @@ function Player.attack()
 	Player.hurtboxHeight = 30
 	-- Have the attack last for a five frames
 	Player.hurtboxDuration = 5
+end
+
+-- openDialog: Reads a dialog file based on id, and sets the speaker and line
+function Player.openDialog(id)
+	if (not Player.isSpeaking) then
+		-- Load the speech file and split it
+		local rawDialog = love.filesystem.read("dialog/template.txt")
+		print(rawDialog)
+		local dialogLines = split(rawDialog, "\n")
+		local currentSpeaker = nil
+
+		-- Loop through dialog lines and load speaker
+		for i=1,#dialogLines do
+			-- Check for all the speakers
+			if (dialogLines[i] == "[Hammer]") then
+				currentSpeaker = "Hammer"
+			elseif (dialogLines[i] == "[MC]") then
+				currentSpeaker = "MC"
+			-- Strip blank lines
+			elseif (dialogLines ~= "") then
+				currentDialog = dialogLines[i]
+				print(currentSpeaker)
+				print(currentDialog)
+			end
+		end
+
+	else
+		Player.isSpeaking = true
+	end
 end
 
 function Player.checkHurtbox()

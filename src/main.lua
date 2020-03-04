@@ -74,6 +74,10 @@ function love.keypressed(key, scancode, isrepeat)
 		if (key == "d" and not editorMode) then
 			Player.airdash()
 		end
+		-- Map it to a for now, later change to z and have a choice in Player
+		if (key == "a" and not editorMode) then
+			Player.openDialog(1)
+		end
 		-- Pausing
 		if (key == "return") then
 			isPaused = not isPaused
