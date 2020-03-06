@@ -43,7 +43,7 @@ end
 
 -- Prints the dialog and speaker to the screen
 function Dialog.drawDialog()
-	-- text, x, y
-	love.graphics.print(Dialog.currentDialog, 0, windowHeight-150)
+	font = love.graphics.newFont(20)
+	love.graphics.print(Dialog.currentDialog, font, 0, windowHeight-150)
 end
 
