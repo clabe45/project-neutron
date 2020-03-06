@@ -41,3 +41,9 @@ function Dialog.nextLine()
 	end
 end
 
+-- Prints the dialog and speaker to the screen
+function Dialog.drawDialog()
+	-- text, x, y
+	love.graphics.print(Dialog.currentDialog, 0, windowHeight-150)
+end
+
