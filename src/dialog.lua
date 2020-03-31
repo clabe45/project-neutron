@@ -3,6 +3,7 @@ Dialog = {
 	index = 1,
 	currentSpeaker = nil,
 	currentDialog = nil,
+	currentDialogIndex = 0,
 	isOpen = false
 }
 
@@ -19,6 +20,7 @@ end
 
 -- nextLine: Get the next line in the dialog
 function Dialog.nextLine()
+	Dialog.currentDialogIndex = 0
 	-- Loop through dialog lines and load speaker
 	for i=Dialog.index,#Dialog.dialogLines do
 		-- Check for all the speakers
@@ -43,7 +45,9 @@ end
 
 -- Prints the dialog and speaker to the screen
 function Dialog.drawDialog()
+	Dialog.currentDialogIndex = Dialog.currentDialogIndex + 1
 	font = love.graphics.newFont(20)
-	love.graphics.print(Dialog.currentDialog, font, 0, windowHeight-150)
+	currentLine = ""
+	love.graphics.print(string.sub(Dialog.currentDialog, 1, Dialog.currentDialogIndex), font, 0, windowHeight-150)
 end
 
