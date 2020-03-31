@@ -168,6 +168,8 @@ function love.draw()
 			debugLine = debugLine .. "Current Tile: " .. Tiles[Editor.currentTile].name .. "\n"
 		elseif (Editor.mode == "entity") then
 			debugLine = debugLine .. "Current Entity: " .. Entities.list[Editor.currentEntity].name .. "\n"
+		elseif (Editor.mode == "item") then
+			debugLine = debugLine .. "Current Item: " .. Items.list[Editor.currentItem].name .. "\n"
 		end
 
 		-- Draw Debug

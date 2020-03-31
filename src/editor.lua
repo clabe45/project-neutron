@@ -1,6 +1,7 @@
 Editor = {
 	currentTile = 1,
 	currentEntity = 1,
+	currentItem = 1,
 	mode = "tile", -- Can be tile, entity, or item
 	commandMode = false,
 	commandModeLine = ""
@@ -41,6 +42,8 @@ function Editor.handleInput(key)
 				Editor.currentTile = Editor.currentTile - 1
 			elseif (Editor.mode == "entity") then
 				Editor.currentEntity = Editor.currentEntity - 1
+			elseif (Editor.mode == "item") then
+				Editor.currentItem = Editor.currentItem - 1
 			end
 		end
 		if (key == "right" and editorMode and Editor.currentTile < Tiles.totalTiles) then
@@ -48,16 +51,22 @@ function Editor.handleInput(key)
 				Editor.currentTile = Editor.currentTile + 1
 			elseif (Editor.mode == "entity") then
 				Editor.currentEntity = Editor.currentEntity + 1
+			elseif (Editor.mode == "item") then
+				Editor.currentItem = Editor.currentItem + 1
 			end
 		end
 		if (key == "down") then
 			if (Editor.mode == "tile") then
 				Editor.mode = "entity"
+			elseif (Editor.mode == "entity") then
+				Editor.mode = "item"
 			end
 		end
 		if (key == "up") then
 			if (Editor.mode == "entity") then
 				Editor.mode = "tile"
+			elseif (Editor.mode == "item") then
+				Editor.mode = "entity"
 			end
 		end
 		if (key == "m1") then
