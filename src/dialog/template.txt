@@ -1,4 +1,4 @@
-[Hammer]
+[MM]
 This is where I get off kid.
 I'm supposed to speak a bit?
 Each line is a box of dialog.
@@ -6,7 +6,7 @@ Each line is a box of dialog.
 [MC]
 And the box up top?
 
-[Hammer]
+[MM]
 It tells the program who's speaking.
 The idea is that we split it by \n
 Then we loop through
