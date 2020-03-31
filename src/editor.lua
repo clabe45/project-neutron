@@ -37,21 +37,21 @@ function Editor.handleInput(key)
 
 		-- Shift currently selected tile
 		-- Move the bounds checkers into the if ladder
-		if (key == "left" and editorMode and Editor.currentTile > 0) then
-			if (Editor.mode == "tile") then
+		if (key == "left" and editorMode) then
+			if (Editor.mode == "tile" and Editor.currentTile > 1) then
 				Editor.currentTile = Editor.currentTile - 1
-			elseif (Editor.mode == "entity") then
+			elseif (Editor.mode == "entity" and Editor.currentEntity > 1) then
 				Editor.currentEntity = Editor.currentEntity - 1
-			elseif (Editor.mode == "item") then
+			elseif (Editor.mode == "item" and Editor.currentItem > 1) then
 				Editor.currentItem = Editor.currentItem - 1
 			end
 		end
-		if (key == "right" and editorMode and Editor.currentTile < Tiles.totalTiles) then
-			if (Editor.mode == "tile") then
+		if (key == "right" and editorMode) then
+			if (Editor.mode == "tile" and (Editor.currentTile < Tiles.totalTiles)) then
 				Editor.currentTile = Editor.currentTile + 1
-			elseif (Editor.mode == "entity") then
+			elseif (Editor.mode == "entity" and (Editor.currentEntity < Entities.totalEntities)) then
 				Editor.currentEntity = Editor.currentEntity + 1
-			elseif (Editor.mode == "item") then
+			elseif (Editor.mode == "item" and (Editor.currentItem < Items.totalItems)) then
 				Editor.currentItem = Editor.currentItem + 1
 			end
 		end

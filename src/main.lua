@@ -2,6 +2,7 @@
 love.graphics.setDefaultFilter("nearest", "nearest")
 require("level")
 require("entities")
+require("items")
 require("player")
 require("editor")
 require("camera")

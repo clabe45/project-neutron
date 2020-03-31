@@ -7,7 +7,8 @@ Entities = {
 	entityCount = 0,
 	list = {
 		Zombie
-	}
+	},
+	totalEntities = 1
 }
 
 -- spawnEntity: creates an entity at (x, y) and loads it into the Entities object
