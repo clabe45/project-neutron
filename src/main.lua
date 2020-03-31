@@ -154,7 +154,7 @@ function love.draw()
 				love.graphics.rectangle("fill", Player.hurtboxX, Player.hurtboxY, Player.hurtboxWidth, Player.hurtboxHeight)
 			end
 		end
-		
+
 		-- Draw the dialog
 		if (Dialog.isOpen) then
 			Dialog.drawDialog()
