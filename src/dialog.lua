@@ -26,14 +26,11 @@ function Dialog.nextLine()
 		-- Check for all the speakers
 		if (Dialog.dialogLines[i] == "[Hammer]") then
 			Dialog.currentSpeaker = "Hammer"
-			print(Dialog.currentSpeaker)
 		elseif (Dialog.dialogLines[i] == "[MC]") then
 			Dialog.currentSpeaker = "MC"
-			print(Dialog.currentSpeaker)
 		-- Strip blank lines
 		elseif (Dialog.dialogLines[i] ~= "") then
 			Dialog.currentDialog = Dialog.dialogLines[i]
-			print(Dialog.currentDialog)
 			Dialog.index = i+1
 			return
 		else
