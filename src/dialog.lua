@@ -41,6 +41,10 @@ function Dialog.nextLine()
 			Dialog.index = i+1
 		end
 	end
+	if (Dialog.index > #Dialog.dialogLines) then
+		Dialog.isOpen = false
+		Dialog.index = 1
+	end
 end
 
 -- Prints the dialog and speaker to the screen
