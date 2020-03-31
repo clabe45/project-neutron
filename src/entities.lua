@@ -7,7 +7,8 @@ Entities = {
 	entityCount = 0,
 	list = {
 		Zombie
-	}
+	},
+	totalEntities = 1
 }
 
 -- spawnEntity: creates an entity at (x, y) and loads it into the Entities object
@@ -28,18 +29,13 @@ function Entities.despawnEntity(index)
 	for i=1,Entities.entityCount do
 		if (index == i) then
 			shift = true
-			print("Despawning entity: " .. i)
 		end
 		if (shift and (i == Entities.entityCount)) then
-			print("2 was called!")
 			Entities.entities[i] = nil
-			print("i="..i.." count:"..Entities.entityCount)
 		end
 		if (shift and (i < Entities.entityCount)) then
-			print("1 was called!")
 			Entities.entities[i] = Entities.entities[i+1]
 			Entities.entities[i].index = i
-			print("i="..i.." count:"..Entities.entityCount)
 		end
 	end
 	Entities.entityCount = Entities.entityCount - 1

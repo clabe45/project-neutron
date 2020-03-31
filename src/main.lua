@@ -2,10 +2,12 @@
 love.graphics.setDefaultFilter("nearest", "nearest")
 require("level")
 require("entities")
+require("items")
 require("player")
 require("editor")
 require("camera")
 require("menu")
+require("dialog")
 
 Tiles = {
 	{
@@ -73,6 +75,10 @@ function love.keypressed(key, scancode, isrepeat)
 		-- Player airdash
 		if (key == "d" and not editorMode) then
 			Player.airdash()
+		end
+		-- Map it to a for now, later change to z and have a choice in Player
+		if (key == "a" and not editorMode) then
+			Dialog.openDialog(1)
 		end
 		-- Pausing
 		if (key == "return") then
@@ -150,6 +156,11 @@ function love.draw()
 			end
 		end
 
+		-- Draw the dialog
+		if (Dialog.isOpen) then
+			Dialog.drawDialog()
+		end
+
 		-- Building the debug dialog
 		local debugLine = "Player Coords: (" .. Player.x .. ", " .. Player.y .. ")\n"
 		debugLine = debugLine .. "Player dx: " .. Player.dx .. "\n"
@@ -158,6 +169,8 @@ function love.draw()
 			debugLine = debugLine .. "Current Tile: " .. Tiles[Editor.currentTile].name .. "\n"
 		elseif (Editor.mode == "entity") then
 			debugLine = debugLine .. "Current Entity: " .. Entities.list[Editor.currentEntity].name .. "\n"
+		elseif (Editor.mode == "item") then
+			debugLine = debugLine .. "Current Item: " .. Items.list[Editor.currentItem].name .. "\n"
 		end
 
 		-- Draw Debug
