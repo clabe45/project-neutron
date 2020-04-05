@@ -1,8 +1,3 @@
--- TODO: Put items in items directory
-Souls = {
-	name = "American Souls"
-}
-
 Items = {
 	items = {
 	},
