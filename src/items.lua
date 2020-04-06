@@ -1,3 +1,5 @@
+require("items/souls")
+
 Items = {
 	items = {
 	},
