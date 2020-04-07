@@ -130,6 +130,7 @@ function love.update(dt)
 		Player.updatePhysics()
 		Entities.applyGravity()
 		Entities.updateEntities()
+		Items.updateItems()
 		Level.checkDoor()
 		Camera.update()
 	end

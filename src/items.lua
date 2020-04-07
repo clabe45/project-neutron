@@ -12,7 +12,7 @@ Items = {
 
 function Items.loadItem(x, y, itemId)
 	print(Items.list[itemId].name)
-	Items.items[Items.itemCount + 1] = {id = itemId, x = x, y = y}
+	Items.items[Items.itemCount + 1] = {id = itemId, x = x, y = y, width = 32, height = 32, dx = 0, dy = 0}
 	Items.itemCount = Items.itemCount + 1
 end
 
@@ -20,7 +20,14 @@ function Items.draw()
 	for i=1,Items.itemCount do
 		itemX = Camera.convert("x", Items.items[i].x)
 		itemY = Camera.convert("y", Items.items[i].y)
-		love.graphics.draw(Items.list[Items.items[i].id].sprite, itemX, itemY, 0, 2, 2, 0, 0)
+		love.graphics.draw(Items.list[Items.items[i].id].sprite, itemX, itemY, 0, 1, 1, 0, 0)
+	end
+end
+
+function Items.updateItems()
+	for i=1,Items.itemCount do
+		Items.items[i].dy = Items.items[i].dy + .5
+		Entities.checkCollision(Items.items[i])
 	end
 end
 
