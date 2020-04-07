@@ -86,8 +86,11 @@ function Editor.handleInput(key)
 			end
 			if (Editor.mode == "entity") then
 				-- Replace magic number
-				-- Add something to check for mouseup?
+				-- Add something to check for mouseup? If not it spams them
 				Entities.spawnEntity(x, y, Editor.currentEntity)
+			end
+			if (Editor.mode == "item") then
+				Items.loadItem(x, y, Editor.currentItem)
 			end
 		end
 	end
