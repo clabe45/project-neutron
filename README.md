@@ -1,4 +1,4 @@
-## Testgame (v2)
+## Project Neutron
 This is a side-scrolling platformer made in **love2d**. The master branch contains "safe" code that should run flawlessly in LOVE, while the dev branch contains experimental and potentially buggy code.
 
 ## Contributing
