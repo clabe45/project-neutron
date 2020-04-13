@@ -108,6 +108,21 @@ function Player.checkHurtbox()
 	end
 end
 
+--function Player.checkHitbox()
+	--for i=1,Entities.entityCount do
+		--local entity = Entities.entities[i]
+		--if ((Camera.convert("x", entity.x) < Player.hurtboxX + Player.hurtboxWidth and Camera.convert("x", entity.x) + entity.width > Player.hurtboxX) and (Camera.convert("y", entity.y) < Player.hurtboxY + Player.hurtboxHeight and Camera.convert("y", entity.y) + entity.height > Player.hurtboxY)) then
+
+function Player.checkItems()
+	for i=1,Items.itemCount do
+		local item = Items.items[i]
+		print(item.x)
+		if (Camera.convert("x", item.x) < Camera.convert("x", Player.x) + Player.width and ((Camera.convert("x", item.x) + item.width) > (Camera.convert("x", Player.x))) and Camera.convert("y", item.y) < Camera.convert("y", Player.y) + Player.height and ((Camera.convert("y", item.y) + item.height) > (Camera.convert("y", Player.y)))) then
+			print("Player has collided with item!")
+		end
+	end
+end
+
 function Player.updatePhysics()
 	-- Gradually slow dash down
 	if (Player.isDashing) then
