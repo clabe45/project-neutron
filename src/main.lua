@@ -130,6 +130,7 @@ function love.update(dt)
 		Player.updatePhysics()
 		Entities.applyGravity()
 		Entities.updateEntities()
+		Items.updateItems()
 		Level.checkDoor()
 		Camera.update()
 	end
@@ -146,6 +147,7 @@ function love.draw()
 		Menu.isActive = true
 	else
 		Level.draw()
+		Items.draw()
 		if (not editorMode) then
 			Player.drawPlayer()
 			Entities.drawEntities()
