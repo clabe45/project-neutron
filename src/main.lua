@@ -50,7 +50,7 @@ function love.load()
 	windowHeight = love.graphics.getHeight()
 	love.window.setTitle("Project Neutron")
 	love.keyboard.setKeyRepeat(true)
-	love.filesystem.setIdentity("testgame_v2")
+	love.filesystem.setIdentity("project-neutron")
 	Entities.spawnEntity(250, 250, 1)
 	Level.read("newtest")
 end
