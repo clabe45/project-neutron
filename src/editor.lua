@@ -4,7 +4,8 @@ Editor = {
 	currentItem = 1,
 	mode = "tile", -- Can be tile, entity, or item
 	commandMode = false,
-	commandModeLine = ""
+	commandModeLine = "",
+	mouseActive = false
 }
 
 editorMode = true
@@ -84,13 +85,15 @@ function Editor.handleInput(key)
 					Level.addTile(x, y, Editor.currentTile)
 				end
 			end
-			if (Editor.mode == "entity") then
+			if (Editor.mode == "entity" and not Editor.mouseActive) then
 				-- Replace magic number
-				-- Add something to check for mouseup? If not it spams them
 				Entities.spawnEntity(x, y, Editor.currentEntity)
+				Editor.mouseActive = true
 			end
-			if (Editor.mode == "item") then
+			if (Editor.mode == "item" and not Editor.mouseActive) then
 				Items.loadItem(x, y, Editor.currentItem)
+				print("Dropping " .. Editor.currentItem)
+				Editor.mouseActive = true
 			end
 		end
 	end

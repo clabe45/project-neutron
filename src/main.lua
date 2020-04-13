@@ -134,6 +134,7 @@ function love.update(dt)
 		Level.checkDoor()
 		Camera.update()
 	end
+
 	-- Add a way for animations to tell what frame they're on
 	frameCounter = frameCounter + 1
 	if (frameCounter > 60) then
@@ -185,6 +186,8 @@ function love.draw()
 			-- Add Tile
 			if (love.mouse.isDown(1)) then
 				Editor.handleInput("m1")
+			else
+				Editor.mouseActive = false
 			end
 			-- Delete Tile
 			if (love.mouse.isDown(2)) then
