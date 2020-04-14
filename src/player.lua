@@ -27,7 +27,8 @@ Player = {
 	isAttacking = false,
 	forwardFace = true,
 	health = 100,
-	weaponAttack = 40
+	weaponAttack = 40,
+	inventory = {} -- format: {id, amount}
 }
 
 -- drawPlayer: Draws the player sprite
@@ -116,9 +117,13 @@ end
 function Player.checkItems()
 	for i=1,Items.itemCount do
 		local item = Items.items[i]
-		print(item.x)
+		if (item == nil) then return end -- This is my duct tape.
 		if (Camera.convert("x", item.x) < Camera.convert("x", Player.x) + Player.width and ((Camera.convert("x", item.x) + item.width) > (Camera.convert("x", Player.x))) and Camera.convert("y", item.y) < Camera.convert("y", Player.y) + Player.height and ((Camera.convert("y", item.y) + item.height) > (Camera.convert("y", Player.y)))) then
-			print("Player has collided with item!")
+			-- Add a function to check if player has item
+			Player.inventory[#Player.inventory+1] = {item.id, 1}
+			-- remove item
+			Items.unloadItem(i)
+			print(Player.inventory[#Player.inventory])
 		end
 	end
 end

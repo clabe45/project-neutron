@@ -16,6 +16,23 @@ function Items.loadItem(x, y, itemId)
 	Items.itemCount = Items.itemCount + 1
 end
 
+function Items.unloadItem(index)
+	local shift = false -- shift the item list over to remove the item
+	for i=1,Items.itemCount do
+		if (index == i) then
+			shift = true
+		end
+		if (shift and (i == Items.itemCount)) then
+			Items.items[i] = nil
+		end
+		if (shift and (i < Items.itemCount)) then
+			Items.items[i] = Items.items[i+1]
+			Items.items[i].index = i
+		end
+	end
+	Items.itemCount = Items.itemCount - 1
+end
+
 function Items.draw()
 	for i=1,Items.itemCount do
 		itemX = Camera.convert("x", Items.items[i].x)
