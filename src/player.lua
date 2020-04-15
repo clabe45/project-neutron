@@ -109,23 +109,32 @@ function Player.checkHurtbox()
 	end
 end
 
---function Player.checkHitbox()
-	--for i=1,Entities.entityCount do
-		--local entity = Entities.entities[i]
-		--if ((Camera.convert("x", entity.x) < Player.hurtboxX + Player.hurtboxWidth and Camera.convert("x", entity.x) + entity.width > Player.hurtboxX) and (Camera.convert("y", entity.y) < Player.hurtboxY + Player.hurtboxHeight and Camera.convert("y", entity.y) + entity.height > Player.hurtboxY)) then
-
+-- checkItems: Check if the player is touching an item, and pick it up
 function Player.checkItems()
 	for i=1,Items.itemCount do
 		local item = Items.items[i]
 		if (item == nil) then return end -- This is my duct tape.
 		if (Camera.convert("x", item.x) < Camera.convert("x", Player.x) + Player.width and ((Camera.convert("x", item.x) + item.width) > (Camera.convert("x", Player.x))) and Camera.convert("y", item.y) < Camera.convert("y", Player.y) + Player.height and ((Camera.convert("y", item.y) + item.height) > (Camera.convert("y", Player.y)))) then
-			-- Add a function to check if player has item
-			Player.inventory[#Player.inventory+1] = {item.id, 1}
-			-- remove item
+			-- Checking if player has the item in their invetory already
+			local inventoryIndex = Player.hasItem(item.id)
+			if (inventoryIndex == -1) then
+				Player.inventory[#Player.inventory+1] = {id = item.id, amount = 1}
+			else
+				Player.inventory[inventoryIndex].amount = Player.inventory[inventoryIndex].amount + 1
+			end
 			Items.unloadItem(i)
-			print(Player.inventory[#Player.inventory])
 		end
 	end
+end
+
+-- hasItem: Returns index of item if player has it in their inventory, -1 otherwise
+function Player.hasItem(id)
+	for i=1,#Player.inventory do
+		if (Player.inventory[i].id == id) then
+			return i
+		end
+	end
+	return -1
 end
 
 function Player.updatePhysics()
