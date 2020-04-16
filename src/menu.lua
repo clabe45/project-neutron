@@ -1,6 +1,6 @@
 Menu = {
 	isActive = false,
-	page = "main",
+	page = "items",
 	maxSelection = 5,
 	selection = 1,
 	descFlavortext = {
@@ -12,12 +12,41 @@ Menu = {
 	}
 }
 
+local windowWidth = love.graphics.getWidth()
+local windowHeight = love.graphics.getHeight()
+
+local itemFrame = {
+	x = 0,
+	y = windowHeight/2,
+	width = windowWidth/3,
+	height = windowHeight - (windowHeight/2),
+	selectors = {
+		"Test selector"
+	}
+}
+
+local itemElement = {
+	x = itemFrame.x + 10,
+	y = itemFrame.y + 10,
+	width = itemFrame.width - 10,
+	height = 30,
+	text = "ITEM NAME"
+}
+
+local itemPreview = {
+	x = itemFrame.width + 30,
+	y = itemFrame.y,
+	width = windowWidth - itemFrame.width + 30,
+	height = itemFrame.height,
+	selectors = nil
+}
+
 -- drawMenu: Will later be used to draw a menu showing status
 function Menu.drawMenu()
+	love.graphics.setColor(1, 1, 1, 1)
+	love.graphics.rectangle('fill', 0, 0, windowWidth, windowHeight)
 	if (Menu.page == "main") then
 		-- Draw main window
-		love.graphics.setColor(1, 1, 1, 1)
-		love.graphics.rectangle('fill', 0, 0, windowWidth, windowHeight)
 		Menu.drawElement("desc", 200, windowHeight-160, 500, 100, Menu.descFlavortext[Menu.selection], 0)
 		-- Draw list items
 		Menu.drawElement("list", 20, windowHeight-160, 150, 20, "Equipment", 1)
@@ -25,7 +54,15 @@ function Menu.drawMenu()
 		Menu.drawElement("list", 20, windowHeight-100, 150, 20, "Beastiary", 3)
 		Menu.drawElement("list", 20, windowHeight-70, 150, 20, "Books", 4)
 		Menu.drawElement("list", 20, windowHeight-40, 150, 20, "Options", 5)
+	elseif (Menu.page == "items") then
+		Menu.drawItemMenu()
 	end
+end
+
+function Menu.drawItemMenu()
+	Menu.drawElement("items", itemFrame.x, itemFrame.y, itemFrame.width, itemFrame.height, "TEST", 0)
+	Menu.drawElement("itemDesc", itemPreview.x, itemPreview.y, itemPreview.width, itemPreview.height, "TEST", 0)
+	-- Add some way to switch to items
 end
 
 -- drawElement: Draws an element to the menu
