@@ -81,6 +81,7 @@ end
 
 -- drawMainMenu: Draws the main menu to the screen
 function Menu.drawMainMenu()
+	menuDescription.text = Menu.menuDescriptions[Menu.selection]
 	Menu.drawElement(menuDescription)
 	for i=1,#Menu.menuElements do
 		-- Metatable hacks
