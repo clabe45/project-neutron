@@ -1,9 +1,16 @@
 Menu = {
 	isActive = false,
-	page = "items",
+	page = "main",
 	maxSelection = 5,
 	selection = 1,
-	descFlavortext = {
+	menuElements = {
+		"Equipment",
+		"Items",
+		"Beastiary",
+		"Books",
+		"Options"
+	},
+	menuDescriptions = {
 		"The things you wear!",
 		"The things you use!",
 		"The things you killed!",
@@ -39,21 +46,53 @@ local itemPreview = {
 	text = nil
 }
 
+local menuDescription = {
+	x = 200,
+	y = windowHeight - 160,
+	width = 500,
+	height = 100,
+	text = Menu.menuDescriptions[Menu.selection]
+}
+
+local menuElement = {
+	x = 20,
+	y = menuDescription.y,
+	width = 150,
+	height = 20,
+	text = "TEXT HERE"
+}
+
 -- drawMenu: Will later be used to draw a menu showing status
 function Menu.drawMenu()
 	love.graphics.setColor(1, 1, 1, 1)
 	love.graphics.rectangle('fill', 0, 0, windowWidth, windowHeight)
 	if (Menu.page == "main") then
 		-- Draw main window
-		Menu.drawElement("desc", 200, windowHeight-160, 500, 100, Menu.descFlavortext[Menu.selection], 0)
-		-- Draw list items
-		Menu.drawElement("list", 20, windowHeight-160, 150, 20, "Equipment", 1)
-		Menu.drawElement("list", 20, windowHeight-130, 150, 20, "Items", 2)
-		Menu.drawElement("list", 20, windowHeight-100, 150, 20, "Beastiary", 3)
-		Menu.drawElement("list", 20, windowHeight-70, 150, 20, "Books", 4)
-		Menu.drawElement("list", 20, windowHeight-40, 150, 20, "Options", 5)
+		Menu.drawMainMenu()
+		--Menu.drawElement("desc", 200, windowHeight-160, 500, 100, Menu.descFlavortext[Menu.selection], 0)
+		---- Draw list items
+		--Menu.drawElement("list", 20, windowHeight-160, 150, 20, "Equipment", 1)
+		--Menu.drawElement("list", 20, windowHeight-130, 150, 20, "Items", 2)
+		--Menu.drawElement("list", 20, windowHeight-100, 150, 20, "Beastiary", 3)
+		--Menu.drawElement("list", 20, windowHeight-70, 150, 20, "Books", 4)
+		--Menu.drawElement("list", 20, windowHeight-40, 150, 20, "Options", 5)
 	elseif (Menu.page == "items") then
 		Menu.drawItemMenu()
+	end
+end
+
+function Menu.drawMainMenu()
+	Menu.drawElement(menuDescription)
+	for i=1,#Menu.menuElements do
+		-- Oh god. Lua tables are just references so I have to make a BRAND NEW TABLE per element. Cool.
+		local currentElement_mt = {}
+		currentElement_mt.__index = menuElement
+		local currentElement = {}
+		setmetatable(currentElement, currentElement_mt)
+		currentElement.text = Menu.menuElements[i]
+		currentElement.y = currentElement.y + (i*30)
+		currentElement.height = currentElement.height + (i*30)
+		Menu.drawElement(currentElement)
 	end
 end
 
