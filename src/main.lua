@@ -60,25 +60,28 @@ function love.keypressed(key, scancode, isrepeat)
 	if (Editor.commandMode or editorMode) then
 		Editor.handleInput(key)
 	else
-		-- Activate level editor
-		if (key == "e") then
-			editorMode = true
-		end
-		-- Jumping
-		if (key == "space" and not editorMode) then
-			Entities.jump(Player)
-		end
-		-- Player attackbox
-		if (key == "z" and not editorMode) then
-			Player.attack()
-		end
-		-- Player airdash
-		if (key == "d" and not editorMode) then
-			Player.airdash()
-		end
-		-- Map it to a for now, later change to z and have a choice in Player
-		if (key == "a" and not editorMode) then
-			Dialog.openDialog(1)
+		-- Only interact with world when not paused
+		if (not isPaused) then
+			-- Activate level editor
+			if (key == "e") then
+				editorMode = true
+			end
+			-- Jumping
+			if (key == "space" and not editorMode) then
+				Entities.jump(Player)
+			end
+			-- Player attackbox
+			if (key == "z" and not editorMode) then
+				Player.attack()
+			end
+			-- Player airdash
+			if (key == "d" and not editorMode) then
+				Player.airdash()
+			end
+			-- Map it to a for now, later change to z and have a choice in Player
+			if (key == "a" and not editorMode) then
+				Dialog.openDialog(1)
+			end
 		end
 		-- Pausing
 		if (key == "return") then
