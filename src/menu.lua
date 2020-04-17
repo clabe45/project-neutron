@@ -20,9 +20,7 @@ local itemFrame = {
 	y = windowHeight/2,
 	width = windowWidth/3,
 	height = windowHeight - (windowHeight/2),
-	selectors = {
-		"Test selector"
-	}
+	text = nil
 }
 
 local itemElement = {
@@ -38,7 +36,7 @@ local itemPreview = {
 	y = itemFrame.y,
 	width = windowWidth - itemFrame.width + 30,
 	height = itemFrame.height,
-	selectors = nil
+	text = nil
 }
 
 -- drawMenu: Will later be used to draw a menu showing status
@@ -60,25 +58,39 @@ function Menu.drawMenu()
 end
 
 function Menu.drawItemMenu()
-	Menu.drawElement("items", itemFrame.x, itemFrame.y, itemFrame.width, itemFrame.height, "TEST", 0)
-	Menu.drawElement("itemDesc", itemPreview.x, itemPreview.y, itemPreview.width, itemPreview.height, "TEST", 0)
+	Menu.drawElement(itemFrame)
+	Menu.drawElement(itemPreview)
+	for i=1,#Player.inventory do
+		local currentItem = itemElement
+		currentItem.text = Items.list[Player.inventory[i].id].name .. " " .. Player.inventory[i].amount
+		Menu.drawElement(itemElement)
+	end
 	-- Add some way to switch to items
 end
 
 -- drawElement: Draws an element to the menu
-function Menu.drawElement(elementType, x, y, width, height, text, index)
-	-- Draw the outer box
-	if (index == Menu.selection) then
-		-- Make the selected one colored
-		love.graphics.setColor(0, 0, .5, 1)
-	else
-		love.graphics.setColor(.5, .5, .5, 1)
-	end
-	love.graphics.rectangle('fill', x, y, width, height)
+--function Menu.drawElement(elementType, x, y, width, height, text, index)
+	---- Draw the outer box
+	--if (index == Menu.selection) then
+		---- Make the selected one colored
+		--love.graphics.setColor(0, 0, .5, 1)
+	--else
+		--love.graphics.setColor(.5, .5, .5, 1)
+	--end
+	--love.graphics.rectangle('fill', x, y, width, height)
 
-	-- Draw the text
+	---- Draw the text
+	--love.graphics.setColor(1, 1, 1, 1)
+	--love.graphics.print(text, x, y)
+--end
+
+function Menu.drawElement(element)
+	love.graphics.setColor(.5, .5, .5, 1)
+	love.graphics.rectangle('fill', element.x, element.y, element.width, element.height)
 	love.graphics.setColor(1, 1, 1, 1)
-	love.graphics.print(text, x, y)
+	if (element.text ~= nil) then
+		love.graphics.print(element.text, element.x, element.y)
+	end
 end
 
 -- shiftUp: Shift the menu selection up an item
