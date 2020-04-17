@@ -22,6 +22,7 @@ Menu = {
 local windowWidth = love.graphics.getWidth()
 local windowHeight = love.graphics.getHeight()
 
+-- The frame containing the items in the list
 local itemFrame = {
 	x = 0,
 	y = windowHeight/2,
@@ -30,6 +31,7 @@ local itemFrame = {
 	text = nil
 }
 
+-- Individual items in the list
 local itemElement = {
 	x = itemFrame.x + 10,
 	y = itemFrame.y + 10,
@@ -38,6 +40,7 @@ local itemElement = {
 	text = "ITEM NAME"
 }
 
+-- The item preview, showing flavortext and icon
 local itemPreview = {
 	x = itemFrame.width + 30,
 	y = itemFrame.y,
@@ -46,6 +49,7 @@ local itemPreview = {
 	text = nil
 }
 
+-- The description of the currently hovered menu
 local menuDescription = {
 	x = 200,
 	y = windowHeight - 160,
@@ -54,6 +58,7 @@ local menuDescription = {
 	text = Menu.menuDescriptions[Menu.selection]
 }
 
+-- The individual menu items in the list
 local menuElement = {
 	x = 20,
 	y = menuDescription.y,
@@ -62,7 +67,7 @@ local menuElement = {
 	text = "TEXT HERE"
 }
 
--- drawMenu: Will later be used to draw a menu showing status
+-- drawMenu: Draws the current menu when paused
 function Menu.drawMenu()
 	love.graphics.setColor(1, 1, 1, 1)
 	love.graphics.rectangle('fill', 0, 0, windowWidth, windowHeight)
@@ -74,6 +79,7 @@ function Menu.drawMenu()
 	end
 end
 
+-- drawMainMenu: Draws the main menu to the screen
 function Menu.drawMainMenu()
 	Menu.drawElement(menuDescription)
 	for i=1,#Menu.menuElements do
@@ -82,12 +88,16 @@ function Menu.drawMainMenu()
 		currentElement_mt.__index = menuElement
 		local currentElement = {}
 		setmetatable(currentElement, currentElement_mt)
+		if (Menu.selection == i) then
+			currentElement.selected = true
+		end
 		currentElement.text = Menu.menuElements[i]
 		currentElement.y = currentElement.y + ((i-1)*30)
 		Menu.drawElement(currentElement)
 	end
 end
 
+-- drawItemMenu: Draws the item menu to the screen
 function Menu.drawItemMenu()
 	Menu.drawElement(itemFrame)
 	Menu.drawElement(itemPreview)
@@ -99,24 +109,13 @@ function Menu.drawItemMenu()
 	-- Add some way to switch to items
 end
 
--- drawElement: Draws an element to the menu
---function Menu.drawElement(elementType, x, y, width, height, text, index)
-	---- Draw the outer box
-	--if (index == Menu.selection) then
-		---- Make the selected one colored
-		--love.graphics.setColor(0, 0, .5, 1)
-	--else
-		--love.graphics.setColor(.5, .5, .5, 1)
-	--end
-	--love.graphics.rectangle('fill', x, y, width, height)
-
-	---- Draw the text
-	--love.graphics.setColor(1, 1, 1, 1)
-	--love.graphics.print(text, x, y)
---end
-
+-- drawElement: Draws an element to the screen
 function Menu.drawElement(element)
-	love.graphics.setColor(.5, .5, .5, 1)
+	if (element.selected) then
+		love.graphics.setColor(0, 0, 1, 1)
+	else
+		love.graphics.setColor(.5, .5, .5, 1)
+	end
 	love.graphics.rectangle('fill', element.x, element.y, element.width, element.height)
 	love.graphics.setColor(1, 1, 1, 1)
 	if (element.text ~= nil) then
