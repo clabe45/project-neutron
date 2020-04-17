@@ -69,13 +69,6 @@ function Menu.drawMenu()
 	if (Menu.page == "main") then
 		-- Draw main window
 		Menu.drawMainMenu()
-		--Menu.drawElement("desc", 200, windowHeight-160, 500, 100, Menu.descFlavortext[Menu.selection], 0)
-		---- Draw list items
-		--Menu.drawElement("list", 20, windowHeight-160, 150, 20, "Equipment", 1)
-		--Menu.drawElement("list", 20, windowHeight-130, 150, 20, "Items", 2)
-		--Menu.drawElement("list", 20, windowHeight-100, 150, 20, "Beastiary", 3)
-		--Menu.drawElement("list", 20, windowHeight-70, 150, 20, "Books", 4)
-		--Menu.drawElement("list", 20, windowHeight-40, 150, 20, "Options", 5)
 	elseif (Menu.page == "items") then
 		Menu.drawItemMenu()
 	end
@@ -84,14 +77,13 @@ end
 function Menu.drawMainMenu()
 	Menu.drawElement(menuDescription)
 	for i=1,#Menu.menuElements do
-		-- Oh god. Lua tables are just references so I have to make a BRAND NEW TABLE per element. Cool.
+		-- Metatable hacks
 		local currentElement_mt = {}
 		currentElement_mt.__index = menuElement
 		local currentElement = {}
 		setmetatable(currentElement, currentElement_mt)
 		currentElement.text = Menu.menuElements[i]
-		currentElement.y = currentElement.y + (i*30)
-		currentElement.height = currentElement.height + (i*30)
+		currentElement.y = currentElement.y + ((i-1)*30)
 		Menu.drawElement(currentElement)
 	end
 end
